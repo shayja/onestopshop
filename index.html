@@ -7,11 +7,10 @@
     <title>One Stop Shop — בניית אתרים, אפליקציות ואוטומציה לעסקים</title>
     <meta
       name="description"
-      content="One Stop Shop - אתרים, אפליקציות ואוטומציה לעסקים קטנים, הכול במקום אחד. מאפיון ועד השקה, כל הפרויקטים חיים באוויר."
+      content="One Stop Shop - בניית אתרים, אפליקציות ואוטומציה לעסקים קטנים, הכול במקום אחד. מאפיון ועד השקה, כל הפרויקטים חיים באוויר."
     />
     <link rel="canonical" href="https://onestopshop.co.il/" />
 
-    <!-- ===== Open Graph / WhatsApp preview ===== -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="he_IL" />
     <meta property="og:site_name" content="One Stop Shop" />
@@ -21,7 +20,7 @@
     />
     <meta
       property="og:description"
-      content="אתרים, אפליקציות ואוטומציה לעסקים - הכול במקום אחד, מאפיון ועד השקה."
+      content="בניית אתרים, אפליקציות ואוטומציה לעסקים - הכול במקום אחד, מאפיון ועד השקה."
     />
     <meta property="og:url" content="https://onestopshop.co.il/" />
     <meta
@@ -37,7 +36,7 @@
     />
     <meta
       name="twitter:description"
-      content="אתרים, אפליקציות ואוטומציה לעסקים - הכול במקום אחד, מאפיון ועד השקה."
+      content="בניית אתרים, אפליקציות ואוטומציה לעסקים - הכול במקום אחד, מאפיון ועד השקה."
     />
     <meta
       name="twitter:image"
@@ -66,7 +65,6 @@
       })();
     </script>
 
-    <!-- פונט Heebo באחסון עצמי (וריאבילי, משקלים 400-900) - בלי תלות ב-Google -->
     <link
       rel="preload"
       as="font"
@@ -82,9 +80,8 @@
       crossorigin
     />
 
-    <link rel="stylesheet" href="styles.css?v=1.0" />
+    <link rel="stylesheet" href="styles.css?v=1.6" />
 
-    <!-- Google Analytics (GA4) -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-TM6KP45DQF"
@@ -107,14 +104,13 @@
         <ul class="nav-links">
           <li><a href="#hero">ראשי</a></li>
           <li><a href="#projects">פרויקטים</a></li>
-          <!-- <li><a href="#included">מה כלול</a></li> -->
+          <li><a href="#included">מה כלול</a></li>
           <li><a href="#contact">יצירת קשר</a></li>
         </ul>
       </div>
     </nav>
 
     <header class="hero" id="hero">
-      <!-- תמונת הרקע: לשמור את התמונה שבחרתם בשם images/hero-photo.jpg -->
       <div class="hero-art" aria-hidden="true">
         <div class="hero-photo"></div>
         <div class="hero-overlay"></div>
@@ -124,7 +120,8 @@
           One Stop Shop<span class="accent-dot" aria-hidden="true">.</span>
         </h1>
         <p class="hero-value">
-          אתרים, אפליקציות ואוטומציה לעסקים - הכול במקום אחד, מאפיון ועד השקה.
+          בניית אתרים, אפליקציות ואוטומציה לעסקים - הכול במקום אחד, מאפיון ועד
+          השקה.
         </p>
         <a class="btn btn-whatsapp wa-link" href="#">
           <svg
@@ -269,18 +266,60 @@
         </div>
       </section>
 
-      <section class="automation reveal" aria-labelledby="automation-title">
+      <section
+        class="automation reveal"
+        id="automation"
+        aria-labelledby="automation-title"
+      >
         <div class="container">
-          <h2 id="automation-title">הטמעת אוטומציה לעסק ובניית סוכני AI</h2>
-          <p>
-            שירותי אוטומציה - אנחנו מאפיינים עבור כל עסק תהליכי אוטומציה ומחברים
-            אתכם לפתרון הנכון, כך שהעסק חוסך שעות עבודה כל שבוע.
-          </p>
-          <ul class="automation-list">
-            <li>מענה אוטומטי ראשוני לפניות בוואטסאפ ובמייל</li>
-            <li>סיכום לידים ושליחתם ישירות לוואטסאפ או למייל</li>
-            <li>דוחות אוטומטיים על פניות, מכירות ותורים</li>
-          </ul>
+          <div class="section-header">
+            <h2 id="automation-title">
+              אוטומציה עסקית וסוכני AI שחוסכים לך עשרות שעות
+            </h2>
+            <p class="section-intro">
+              אנחנו לא רק בונים חלון ראווה – אנחנו מחברים את האתר שלך למערכות
+              התפעוליות של העסק.
+            </p>
+          </div>
+
+          <!-- גריד של תרחישי זרימה -->
+          <div class="flows-grid">
+            <!-- תרחיש 1 -->
+            <div class="flow-card">
+              <h3>⚡ תגובה מיידית ללידים</h3>
+              <div class="flow-steps">
+                <div class="step">טופס / וואטסאפ נכנס</div>
+                <div class="arrow" aria-hidden="true">↓</div>
+                <div class="step highlight">מענה AI מותאם אישית</div>
+                <div class="arrow" aria-hidden="true">↓</div>
+                <div class="step">עדכון אוטומטי ב-CRM והתראה</div>
+              </div>
+            </div>
+
+            <!-- תרחיש 2 -->
+            <div class="flow-card">
+              <h3>📅 תיאום פגישות אוטומטי</h3>
+              <div class="flow-steps">
+                <div class="step">בקשה לקביעת שיחה</div>
+                <div class="arrow" aria-hidden="true">↓</div>
+                <div class="step highlight">פתיחת יומן בזמן אמת</div>
+                <div class="arrow" aria-hidden="true">↓</div>
+                <div class="step">סנכרון מלא + תזכורת בוואטסאפ</div>
+              </div>
+            </div>
+
+            <!-- תרחיש 3 -->
+            <div class="flow-card">
+              <h3>🏷️ הצעת מחיר בלייב</h3>
+              <div class="flow-steps">
+                <div class="step">העלאת תמונה / תיאור צורך</div>
+                <div class="arrow" aria-hidden="true">↓</div>
+                <div class="step highlight">ניתוח אלגוריתמי מבוסס AI</div>
+                <div class="arrow" aria-hidden="true">↓</div>
+                <div class="step">פלט מיידי של הצעת מחיר</div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -311,8 +350,16 @@
               <p>עיצוב מקורי שייבנה רק עבורכם וללא שימוש בתבניות מוכנות</p>
             </li>
             <li>
+              <strong>הצגת התקדמות</strong>
+              <p>צפייה בתקדמות הפרויקט בזמן אמת</p>
+            </li>
+            <li>
               <strong>התאמה מלאה לנייד</strong>
               <p>רוב הלקוחות שלכם יגיעו מהטלפון, והאתר בנוי לזה קודם כול.</p>
+            </li>
+            <li>
+              <strong>הטמעת מערכות צד שלישי</strong>
+              <p>חיבור למערכות קיימות כמו CRM, ניוזלטרים, תשלום מקוון ועוד.</p>
             </li>
             <li>
               <strong>יצירת קשר</strong>
@@ -321,8 +368,8 @@
             <li>
               <strong>טיפול מלא בכל הצד הטכני</strong>
               <p>
-                רכישת דומיין, אחסון האתר, יצירת אימיילים עם שם הדומיין שלכם,
-                קידום בסיסי במנועי חיפוש.
+                רכישת דומיין, אחסון האתר, הגדרות DNS, תעודת SSL, קידום בסיסי
+                במנועי חיפוש.
               </p>
             </li>
             <li>
@@ -351,12 +398,16 @@
         </div>
       </section>
 
-      <section class="final-cta reveal" id="contact" aria-label="יצירת קשר">
+      <section
+        class="final-cta reveal"
+        id="contact"
+        aria-labelledby="contact-title"
+      >
         <div class="container">
-          <p>
-            אנחנו עובדים עם מספר מצומצם של לקוחות במקביל - נשמח לשמוע על הפרויקט
-            שלכם.
-          </p>
+          <div class="section-header">
+            <h2 id="contact-title">רוצים שנבנה לכם אתר/אפליקציה?</h2>
+          </div>
+          <p>נשמח לשמוע על הפרויקט שלכם.</p>
           <div class="cta-row">
             <a class="btn btn-whatsapp wa-link" href="#">
               <svg
