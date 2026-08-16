@@ -56,7 +56,7 @@
         var href = "images/hero-" + n + ".jpg";
         document.documentElement.style.setProperty(
           "--hero-img",
-          'url("' + href + '")'
+          'url("' + href + '")',
         );
         var l = document.createElement("link");
         l.rel = "preload";
@@ -94,7 +94,8 @@
         >
         <ul class="nav-links">
           <li><a href="#hero">ראשי</a></li>
-          <li><a href="#projects">פרוייקטים</a></li>
+          <li><a href="#projects">פרויקטים</a></li>
+          <!-- <li><a href="#included">מה כלול</a></li> -->
           <li><a href="#contact">יצירת קשר</a></li>
         </ul>
       </div>
@@ -133,10 +134,8 @@
     <main>
       <section class="projects" id="projects" aria-labelledby="projects-title">
         <div class="container">
-          <h2 id="projects-title">פרויקטים</h2>
-          <p class="section-intro">
-            עבודות נבחרות - כולן חיות באוויר, לחצו ותראו.
-          </p>
+          <h2 id="projects-title">פרויקטים אחרונים</h2>
+          <!-- <p class="section-intro"></p> -->
 
           <article class="project reveal">
             <div class="frame frame-browser">
@@ -280,6 +279,63 @@
             <li>הצעת מחיר סגורה לפרויקט</li>
             <li>אתר באוויר תוך 2–3 שבועות</li>
           </ol>
+        </div>
+      </section>
+
+      <section
+        class="included reveal"
+        id="included"
+        aria-labelledby="included-title"
+      >
+        <div class="container">
+          <h2 id="included-title">מה כולל פרויקט בניית אתר</h2>
+          <ul class="included-list">
+            <li>
+              <strong>פגישת אפיון</strong>
+              <p>שיחה אחת שבה מגדירים יחד מטרות, קהל ותכולה מדויקת.</p>
+            </li>
+            <li>
+              <strong>עיצוב מותאם אישית</strong>
+              <p>עיצוב מקורי שייבנה רק עבורכם וללא שימוש בתבניות מוכנות</p>
+            </li>
+            <li>
+              <strong>התאמה מלאה לנייד</strong>
+              <p>רוב הלקוחות שלכם יגיעו מהטלפון, והאתר בנוי לזה קודם כול.</p>
+            </li>
+            <li>
+              <strong>יצירת קשר</strong>
+              <p>שילוב כל האפשרויות ליצירת קשר: וואטסאפ / שיחה / אימייל</p>
+            </li>
+            <li>
+              <strong>טיפול מלא בכל הצד הטכני</strong>
+              <p>
+                רכישת דומיין, אחסון האתר, יצירת אימיילים עם שם הדומיין שלכם,
+                קידום בסיסי במנועי חיפוש.
+              </p>
+            </li>
+            <li>
+              <strong>שני סבבי תיקונים</strong>
+              <p>כלולים במחיר, כדי שהתוצאה תהיה בדיוק כמו שדמיינתם.</p>
+            </li>
+            <li>
+              <strong>חודש ליווי אחרי העלייה לאוויר</strong>
+              <p>תיקוני תקלות ושאלות, עלינו.</p>
+            </li>
+            <li>
+              <strong>הדרכה ומסירה מסודרת</strong>
+              <p>האתר שלכם, כולל גישה מלאה לכל החשבונות.</p>
+            </li>
+          </ul>
+          <p class="not-included">
+            <strong>לא כלול (ניתן להוסיף):</strong>
+            כתיבת תוכן שיווקי וצילום
+            <span class="sep" aria-hidden="true">·</span>
+            עיצוב לוגו ומיתוג
+            <span class="sep" aria-hidden="true">·</span>
+            עלות שנתית של דומיין ואחסון (משולמת ישירות לספק, עשרות שקלים בשנה)
+            <span class="sep" aria-hidden="true">·</span>
+            אחזקה שוטפת - ראו ליווי חודשי
+          </p>
         </div>
       </section>
 
