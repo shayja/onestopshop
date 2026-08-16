@@ -21,6 +21,19 @@ document.documentElement.classList.add('js');
   });
 })();
 
+// GA4: report contact clicks (no-op when analytics is blocked or absent).
+(function () {
+  const track = (selector, eventName) => {
+    document.querySelectorAll(selector).forEach((a) => {
+      a.addEventListener('click', () => {
+        if (typeof gtag === 'function') gtag('event', eventName);
+      });
+    });
+  };
+  track('.wa-link', 'whatsapp_click');
+  track('.email-link', 'email_click');
+})();
+
 // Floating WhatsApp button — appears after scrolling past the hero.
 const hero = document.querySelector('.hero');
 const waFloat = document.querySelector('.wa-float');
