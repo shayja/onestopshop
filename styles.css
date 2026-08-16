@@ -323,7 +323,11 @@ a {
   max-width: 64rem;
 }
 
-.projects h2 {
+/* Shared section-title: big ink headline with a fading rule.
+   Used by the projects, included and contact sections */
+.projects h2,
+.included h2,
+.final-cta h2 {
   font-family: "Heebo", sans-serif;
   font-size: clamp(2.2rem, 7vw, 3.2rem);
   font-weight: 900;
@@ -332,9 +336,12 @@ a {
   display: flex;
   align-items: baseline;
   gap: 1.5rem;
+  text-align: start;
 }
 
-.projects h2::after {
+.projects h2::after,
+.included h2::after,
+.final-cta h2::after {
   content: "";
   flex: 1;
   height: 1px;
@@ -547,21 +554,29 @@ a {
   padding-block: 4.5rem;
   overflow: hidden;
   isolation: isolate;
+  /* darkest photo of the three → heaviest wash */
+  --band-img: url("images/automation-photo.jpg");
+  --band-wash: 0.9;
 }
 
-/* Modern-office photo under an ivory wash — the photo is darker than
-   the others, so the wash is heavier to keep the ink text readable */
-.automation::after {
+/* Shared photo-band backdrop: a photo under an ivory wash that melts
+   into the page at the top and bottom. Each section sets --band-img
+   (the photo) and --band-wash (how much ivory quiets it) */
+.automation::after,
+.included::after,
+.final-cta::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -2;
-  background-image: url("images/automation-photo.jpg");
+  background-image: var(--band-img);
   background-size: cover;
   background-position: center;
 }
 
-.automation::before {
+.automation::before,
+.included::before,
+.final-cta::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -569,8 +584,8 @@ a {
   background: linear-gradient(
     180deg,
     var(--bg) 0%,
-    rgb(250 249 247 / 0.9) 30%,
-    rgb(250 249 247 / 0.9) 70%,
+    rgb(250 249 247 / var(--band-wash)) 30%,
+    rgb(250 249 247 / var(--band-wash)) 70%,
     var(--bg) 100%
   );
   pointer-events: none;
@@ -583,38 +598,6 @@ a {
   margin: 0 0 1rem;
 }
 
-.automation > .container > p {
-  max-width: 38rem;
-  margin: 0 0 1.75rem;
-}
-
-.automation-list {
-  list-style: none;
-  margin: 0 0 2.25rem;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  max-width: 34rem;
-}
-
-.automation-list li {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
-  font-weight: 500;
-}
-
-.automation-list li::before {
-  content: "";
-  flex: none;
-  width: 0.55rem;
-  height: 0.55rem;
-  border-radius: 2px;
-  background: var(--accent);
-  transform: rotate(45deg) translateY(-1px);
-}
-
 /* --- Automation workflow cards --- */
 
 .automation .container {
@@ -623,19 +606,6 @@ a {
 
 .automation .section-header {
   margin-block-end: 2.75rem;
-}
-
-.badge {
-  display: inline-block;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--accent-deep);
-  background: var(--accent-dim);
-  border: 1px solid rgb(13 51 32 / 0.35);
-  border-radius: 999px;
-  padding: 0.2rem 0.9rem;
-  margin-block-end: 1.1rem;
 }
 
 .automation .section-header h2 {
@@ -690,13 +660,16 @@ a {
 }
 
 .flow-steps {
+  list-style: none;
+  margin: 0;
+  margin-block-start: auto; /* equal-height cards: steps sit at the bottom */
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  margin-block-start: auto; /* equal-height cards: steps sit at the bottom */
 }
 
 .step {
+  position: relative;
   text-align: center;
   font-size: 0.92rem;
   font-weight: 500;
@@ -707,20 +680,31 @@ a {
   border-radius: 10px;
 }
 
+/* Connector arrow drawn between steps, invisible to screen readers */
+.step + .step {
+  margin-block-start: 1.5rem;
+}
+
+.step + .step::before {
+  content: "\2193"; /* ↓ */
+  position: absolute;
+  bottom: 100%;
+  inset-inline-start: 50%;
+  transform: translateX(50%);
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  line-height: 1;
+  color: var(--accent-deep);
+  opacity: 0.55;
+}
+
 .step.highlight {
   background: var(--accent-dim);
   border-color: rgb(13 51 32 / 0.35);
   color: var(--accent-deep);
   font-weight: 700;
-}
-
-.arrow {
-  text-align: center;
-  font-size: 0.95rem;
-  line-height: 1;
-  color: var(--accent-deep);
-  opacity: 0.55;
-  user-select: none;
 }
 
 /* ============================================================
@@ -798,33 +782,8 @@ a {
   padding-block: 2rem 6rem;
   overflow: hidden;
   isolation: isolate;
-}
-
-/* Bright-greenery office photo under an ivory wash — same treatment
-   as the final CTA, so the cards float on a soft photographic ground */
-.included::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  background-image: url("images/included-photo.jpg");
-  background-size: cover;
-  background-position: center;
-}
-
-.included::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(
-    180deg,
-    var(--bg) 0%,
-    rgb(250 249 247 / 0.86) 30%,
-    rgb(250 249 247 / 0.86) 70%,
-    var(--bg) 100%
-  );
-  pointer-events: none;
+  --band-img: url("images/included-photo.jpg");
+  --band-wash: 0.86;
 }
 
 .included .container {
@@ -832,22 +791,7 @@ a {
 }
 
 .included h2 {
-  font-family: "Heebo", sans-serif;
-  font-size: clamp(2.2rem, 7vw, 3.2rem);
-  font-weight: 900;
-  line-height: 1.1;
-  margin: 0 0 2.75rem;
-  display: flex;
-  align-items: baseline;
-  gap: 1.5rem;
-}
-
-.included h2::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  align-self: center;
-  background: linear-gradient(to left, var(--border-light), transparent);
+  margin-block-end: 2.75rem;
 }
 
 .included-list {
@@ -934,6 +878,9 @@ a {
   text-align: center;
   overflow: hidden;
   isolation: isolate;
+  /* characterization-meeting shot; lightest wash of the three */
+  --band-img: url("images/cta-photo.jpg");
+  --band-wash: 0.82;
 }
 
 .final-cta .container {
@@ -941,53 +888,8 @@ a {
   max-width: 64rem; /* title aligns with the "included" section's title */
 }
 
-/* Same section-title treatment as .included / .projects */
 .final-cta h2 {
-  font-family: "Heebo", sans-serif;
-  font-size: clamp(2.2rem, 7vw, 3.2rem);
-  font-weight: 900;
-  line-height: 1.1;
-  margin: 0 0 2.5rem;
-  display: flex;
-  align-items: baseline;
-  gap: 1.5rem;
-  text-align: start;
-}
-
-.final-cta h2::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  align-self: center;
-  background: linear-gradient(to left, var(--border-light), transparent);
-}
-
-/* Photo backdrop (characterization-meeting shot)... */
-.final-cta::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  background-image: url("images/cta-photo.jpg");
-  background-size: cover;
-  background-position: center;
-}
-
-/* ...under an ivory wash that keeps the ink text AA-readable
-   and melts the photo into the page at the top and bottom */
-.final-cta::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(
-    180deg,
-    var(--bg) 0%,
-    rgb(250 249 247 / 0.82) 30%,
-    rgb(250 249 247 / 0.82) 70%,
-    var(--bg) 100%
-  );
-  pointer-events: none;
+  margin-block-end: 2.5rem;
 }
 
 /* With the big title above, the line reads as a quiet subtitle */
