@@ -19,6 +19,20 @@ document.documentElement.classList.add('js');
   document.querySelectorAll('.email-link').forEach((a) => {
     a.href = 'mailto:' + user + '@' + domain;
   });
+
+  // Add contact details to the JSON-LD so crawlers that render JS (Google)
+  // see them, while keeping them out of the static HTML.
+  const ld = document.querySelector('script[type="application/ld+json"]');
+  if (ld) {
+    try {
+      const data = JSON.parse(ld.textContent);
+      data.telephone = '+' + cc + p1 + p2 + p3;
+      data.email = user + '@' + domain;
+      ld.textContent = JSON.stringify(data);
+    } catch {
+      // Malformed JSON-LD — leave it untouched.
+    }
+  }
 })();
 
 // GA4: report contact clicks (no-op when analytics is blocked or absent).
