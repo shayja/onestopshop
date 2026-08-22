@@ -26,9 +26,13 @@ document.documentElement.classList.add('js');
   if (ld) {
     try {
       const data = JSON.parse(ld.textContent);
-      data.telephone = '+' + cc + p1 + p2 + p3;
-      data.email = user + '@' + domain;
-      ld.textContent = JSON.stringify(data);
+      // Only the business schema carries contact details — the guide
+      // page's Article schema has no telephone/email properties.
+      if (data['@type'] === 'ProfessionalService') {
+        data.telephone = '+' + cc + p1 + p2 + p3;
+        data.email = user + '@' + domain;
+        ld.textContent = JSON.stringify(data);
+      }
     } catch {
       // Malformed JSON-LD — leave it untouched.
     }
