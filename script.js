@@ -1,5 +1,6 @@
-// Minimal JS: floating WhatsApp button + subtle reveal fade.
-// The page works fully without this file.
+// Contact-link assembly, GA4 click events, floating WhatsApp button, reveal fade.
+// Without this file the page still renders, but contact CTAs keep their
+// placeholder href="#" — the real WhatsApp/email links only exist at runtime.
 
 document.documentElement.classList.add('js');
 
