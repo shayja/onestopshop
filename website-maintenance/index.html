@@ -98,12 +98,8 @@
       crossorigin
     />
 
-    <link rel="stylesheet" href="/styles.css?v=2.2" />
+    <link rel="stylesheet" href="/styles.css?v=2.3" />
 
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-TM6KP45DQF"
-    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -111,6 +107,14 @@
       }
       gtag("js", new Date());
       gtag("config", "G-TM6KP45DQF");
+      window.addEventListener("load", function () {
+        setTimeout(function () {
+          var s = document.createElement("script");
+          s.async = true;
+          s.src = "https://www.googletagmanager.com/gtag/js?id=G-TM6KP45DQF";
+          document.head.appendChild(s);
+        }, 1500);
+      });
     </script>
   </head>
   <body>

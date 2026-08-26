@@ -74,7 +74,8 @@
     <script>
       (function () {
         var n = Math.floor(Math.random() * 3) + 1;
-        var href = "images/hero-" + n + ".jpg";
+        var size = window.matchMedia("(max-width: 700px)").matches ? "-m" : "";
+        var href = "images/hero-" + n + size + ".webp";
         document.documentElement.style.setProperty(
           "--hero-img",
           'url("' + href + '")',
@@ -83,6 +84,7 @@
         l.rel = "preload";
         l.as = "image";
         l.href = href;
+        l.setAttribute("fetchpriority", "high");
         document.head.appendChild(l);
       })();
     </script>
@@ -102,12 +104,8 @@
       crossorigin
     />
 
-    <link rel="stylesheet" href="styles.css?v=2.2" />
+    <link rel="stylesheet" href="styles.css?v=2.3" />
 
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-TM6KP45DQF"
-    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -115,6 +113,14 @@
       }
       gtag("js", new Date());
       gtag("config", "G-TM6KP45DQF");
+      window.addEventListener("load", function () {
+        setTimeout(function () {
+          var s = document.createElement("script");
+          s.async = true;
+          s.src = "https://www.googletagmanager.com/gtag/js?id=G-TM6KP45DQF";
+          document.head.appendChild(s);
+        }, 1500);
+      });
     </script>
   </head>
   <body>
@@ -176,7 +182,7 @@
                 ><span class="frame-url">line808.com</span>
               </div>
               <img
-                src="images/project-dj.jpg"
+                src="images/project-dj.webp"
                 alt="צילום מסך של אתר line808 - יומן הופעות ונגן סטים"
                 width="1440"
                 height="767"
@@ -207,7 +213,7 @@
                 ><span class="frame-url">emilyjacoby.me</span>
               </div>
               <img
-                src="images/project-musician.jpg"
+                src="images/project-musician.webp"
                 alt="צילום מסך של אתר הפסנתרנית אמילי יעקובי"
                 width="1440"
                 height="900"
@@ -233,7 +239,7 @@
           <article class="project reveal">
             <div class="frame frame-phone">
               <img
-                src="images/project-app.jpg"
+                src="images/project-app.webp"
                 alt="צילום מסך של אפליקציית שורד - ספירה לאחור"
                 width="780"
                 height="1566"
@@ -263,7 +269,7 @@
                 ><span class="frame-url">warendorf.co.il</span>
               </div>
               <img
-                src="images/project-kitchen.jpg"
+                src="images/project-kitchen.webp"
                 alt="צילום מסך של אתר ורנדורף ישראל - מטבחי יוקרה מגרמניה"
                 width="1440"
                 height="744"

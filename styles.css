@@ -266,7 +266,7 @@ a {
 .hero-photo {
   position: absolute;
   inset: 0;
-  background-image: var(--hero-img, url("images/hero-1.jpg"));
+  background-image: var(--hero-img, url("images/hero-1.webp"));
   background-position: center 28%;
   background-size: cover;
   background-repeat: no-repeat;
@@ -574,7 +574,7 @@ a {
   overflow: hidden;
   isolation: isolate;
   /* darkest photo of the three → heaviest wash */
-  --band-img: url("images/automation-photo.jpg");
+  --band-img: url("images/automation-photo.webp");
   --band-wash: 0.9;
 }
 
@@ -801,7 +801,7 @@ a {
   padding-block: 2rem 6rem;
   overflow: hidden;
   isolation: isolate;
-  --band-img: url("images/included-photo.jpg");
+  --band-img: url("images/included-photo.webp");
   --band-wash: 0.86;
 }
 
@@ -898,7 +898,7 @@ a {
   overflow: hidden;
   isolation: isolate;
   /* characterization-meeting shot; lightest wash of the three */
-  --band-img: url("images/cta-photo.jpg");
+  --band-img: url("images/cta-photo.webp");
   --band-wash: 0.82;
 }
 
@@ -1137,5 +1137,19 @@ footer a:hover {
   .js .reveal.in {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* Small screens load the lighter band photos.
+   Kept last so it wins over the base --band-img declarations above. */
+@media (max-width: 700px) {
+  .automation {
+    --band-img: url("images/automation-photo-m.webp");
+  }
+  .included {
+    --band-img: url("images/included-photo-m.webp");
+  }
+  .final-cta {
+    --band-img: url("images/cta-photo-m.webp");
   }
 }
