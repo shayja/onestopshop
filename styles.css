@@ -36,7 +36,7 @@
   --text: #1d1a15;
   --muted: #6e675c;
   --accent: var(--wa-green); /* fills, large marks */
-  --accent-deep: #0d3320; /* text & borders — AA on ivory */
+  --accent-deep: #0d3320; /* text & borders - AA on ivory */
   --accent-dim: rgb(37 211 102 / 0.12);
   --ink-shadow: 29 26 21; /* shadow base color */
   --wa-green: #25d366;
@@ -146,7 +146,7 @@ a {
 }
 
 /* ============================================================
-   Top navigation — fixed, glassy
+   Top navigation - fixed, glassy
    ============================================================ */
 
 .topnav {
@@ -210,7 +210,7 @@ a {
   .nav-links a {
     font-size: 0.88rem;
   }
-  /* the brand already links home — drop the redundant "ראשי"
+  /* the brand already links home - drop the redundant "ראשי"
      so the four remaining items keep to one tidy row */
   .nav-links li:first-child {
     display: none;
@@ -227,7 +227,7 @@ a {
 }
 
 /* ============================================================
-   Hero — full-screen photo, light grade
+   Hero - full-screen photo, light grade
    ============================================================ */
 
 .hero {
@@ -272,7 +272,7 @@ a {
   background-repeat: no-repeat;
 }
 
-/* Wide screens: pin the photo to the end side at full height —
+/* Wide screens: pin the photo to the end side at full height -
    its white edges melt into the ivory page, and the RTL text
    column on the right stays completely clear of the subject */
 @media (min-width: 900px) {
@@ -331,7 +331,7 @@ a {
 }
 
 /* ============================================================
-   Projects — editorial rows
+   Projects - editorial rows
    ============================================================ */
 
 .projects {
@@ -563,7 +563,7 @@ a {
 }
 
 /* ============================================================
-   Automation & AI — soft band
+   Automation & AI - soft band
    ============================================================ */
 
 .automation {
@@ -727,7 +727,7 @@ a {
 }
 
 /* ============================================================
-   How it works — timeline strip
+   How it works - timeline strip
    ============================================================ */
 
 .how {
@@ -772,7 +772,7 @@ a {
 }
 
 .how-strip li:not(:last-child)::after {
-  content: "\2190"; /* ← — forward direction in RTL */
+  content: "\2190"; /* ← - forward direction in RTL */
   color: var(--accent-deep);
   font-weight: 700;
   opacity: 0.7;
@@ -793,7 +793,7 @@ a {
 }
 
 /* ============================================================
-   What's included — checklist grid
+   What's included - checklist grid
    ============================================================ */
 
 .included {
@@ -974,7 +974,7 @@ footer a:hover {
 }
 
 /* ============================================================
-   Article page (guide) — long-form reading layout
+   Article page (guide) - long-form reading layout
    ============================================================ */
 
 .article {
@@ -1010,7 +1010,7 @@ footer a:hover {
   margin: 0 0 1.4rem;
 }
 
-/* Guides hub — card list */
+/* Guides hub - card list */
 .guides-list {
   list-style: none;
   margin: 2.5rem 0 0;

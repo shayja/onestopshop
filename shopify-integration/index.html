@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>
+      אינטגרציית Shopify (שופיפיי) - חיבור החנות שלכם למערכות נוספות | One Stop
+      Shop
+    </title>
+    <meta
+      name="description"
+      content="חיבור חנות Shopify (שופיפיי) למערכות נוספות דרך ה-API של הפלטפורמה - מלאי, הזמנות, אפליקציה או כלי חיצוני. איך זה עובד, מה זה כולל, וכמה זה עולה."
+    />
+    <link
+      rel="canonical"
+      href="https://onestopshop.co.il/shopify-integration/"
+    />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="he_IL" />
+    <meta property="og:site_name" content="One Stop Shop" />
+    <meta
+      property="og:title"
+      content="אינטגרציית Shopify (שופיפיי) - חיבור החנות שלכם למערכות נוספות"
+    />
+    <meta
+      property="og:description"
+      content="חיבור חנות Shopify (שופיפיי) למערכות נוספות דרך ה-API - מלאי, הזמנות, אפליקציה או כלי חיצוני. איך זה עובד, מה זה כולל, וכמה זה עולה."
+    />
+    <meta
+      property="og:url"
+      content="https://onestopshop.co.il/shopify-integration/"
+    />
+    <meta
+      property="og:image"
+      content="https://onestopshop.co.il/images/og-image.jpg"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="אינטגרציית Shopify (שופיפיי) - חיבור החנות שלכם למערכות נוספות"
+    />
+    <meta
+      name="twitter:description"
+      content="חיבור חנות Shopify (שופיפיי) למערכות נוספות דרך ה-API - מלאי, הזמנות, אפליקציה או כלי חיצוני. איך זה עובד, מה זה כולל, וכמה זה עולה."
+    />
+    <meta
+      name="twitter:image"
+      content="https://onestopshop.co.il/images/og-image.jpg"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "אינטגרציית Shopify (שופיפיי) - חיבור החנות שלכם למערכות נוספות",
+        "description": "חיבור חנות Shopify (שופיפיי) למערכות נוספות דרך ה-API של הפלטפורמה - מלאי, הזמנות, אפליקציה או כלי חיצוני. איך זה עובד, מה זה כולל, וכמה זה עולה.",
+        "inLanguage": "he",
+        "mainEntityOfPage": "https://onestopshop.co.il/shopify-integration/",
+        "image": "https://onestopshop.co.il/images/og-image.jpg",
+        "datePublished": "2026-08-26",
+        "dateModified": "2026-08-26",
+        "author": {
+          "@type": "Organization",
+          "name": "One Stop Shop",
+          "url": "https://onestopshop.co.il/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "One Stop Shop",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://onestopshop.co.il/favicon-512.png"
+          }
+        }
+      }
+    </script>
+
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#faf9f7" />
+
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/heebo-var-hebrew.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/heebo-var-latin.woff2"
+      crossorigin
+    />
+
+    <link rel="stylesheet" href="/styles.css?v=2.2" />
+
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-TM6KP45DQF"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-TM6KP45DQF");
+    </script>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="icon-whatsapp" viewBox="0 0 24 24">
+        <path
+          fill="currentColor"
+          d="M12 2a10 10 0 0 0-8.65 15L2 22l5.15-1.33A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.06.79.82-2.98-.2-.31A8.2 8.2 0 1 1 12 20.2Zm4.5-6.13c-.25-.12-1.46-.72-1.68-.8-.23-.09-.39-.13-.56.12-.16.25-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.22-1.45-1.37-1.7-.14-.24-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.48c-.16 0-.43.06-.66.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.13.16 1.74 2.65 4.2 3.72.59.25 1.05.4 1.4.52.59.19 1.13.16 1.56.1.47-.07 1.46-.6 1.66-1.17.21-.58.21-1.07.15-1.17-.06-.1-.23-.17-.47-.29Z"
+        />
+      </symbol>
+    </svg>
+    <nav class="topnav" aria-label="ניווט ראשי">
+      <div class="container nav-inner">
+        <a class="brand" href="/" dir="ltr"
+          >One Stop Shop<span class="accent-dot" aria-hidden="true">.</span></a
+        >
+        <ul class="nav-links">
+          <li><a href="/">ראשי</a></li>
+          <li><a href="/#projects">פרויקטים</a></li>
+          <li><a href="/guides/">מדריכים</a></li>
+          <li><a href="/#contact">יצירת קשר</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="article">
+      <div class="container">
+        <article>
+          <h1>
+            אינטגרציית Shopify (שופיפיי) - חיבור החנות שלכם למערכות נוספות
+          </h1>
+
+          <p>
+            יש לנו ניסיון מעשי באינטגרציות מול Shopify (שופיפיי) דרך ה-API של
+            הפלטפורמה. אם החנות שלכם צריכה לדבר עם מערכת אחרת - מלאי, מערכת
+            הזמנות, אפליקציית מובייל, או כל כלי חיצוני אחר - ספרו לנו מה יש היום
+            ולאן אתם צריכים להגיע, ונגיד בדיוק מה אפשר ומה זה כרוך.
+          </p>
+
+          <h2>מתי חנות Shopify צריכה אינטגרציה</h2>
+
+          <p>
+            Shopify נותנת חנות מלאה מהקופסה, אבל ברגע שהעסק גדל או שיש לו צרכים
+            ספציפיים, לרוב מגיע רגע שבו החנות צריכה לדבר עם משהו נוסף. דוגמאות
+            נפוצות: מלאי שמנוהל במערכת חיצונית וצריך להסתנכרן עם שופיפיי בזמן
+            אמת; מערכת הזמנות או ניהול לקוחות (CRM) שצריכה לקבל את פרטי ההזמנה
+            ברגע שהיא מתבצעת; אפליקציית מובייל שמציגה את קטלוג המוצרים ומאפשרת
+            ללקוחות להזמין ישירות, כשההזמנה נרשמת בחנות עצמה; או כלי דיוור
+            וניתוח שצריכים גישה שוטפת לנתוני המכירות. בכל המקרים האלה, הפתרון
+            הוא לא להחליף את שופיפיי אלא לחבר אותה למה שכבר יש לכם - כך שהמידע
+            זורם אוטומטית בין המערכות בלי הזנה כפולה ובלי טעויות אנוש.
+          </p>
+
+          <h2>מה כולל תהליך האינטגרציה</h2>
+
+          <p>
+            מתחילים במיפוי: מה בדיוק Shopify צריכה לקבל, מה היא צריכה לשלוח,
+            ובאיזה תדירות - בזמן אמת או במחזורים קבועים. על בסיס זה נבנה החיבור
+            עצמו דרך ה-API הרשמי של הפלטפורמה: קריאה ועדכון מוצרים, מלאי או
+            הזמנות, לפי הצורך. חלק חשוב מהעבודה הוא טיפול נכון במקרי כשל - מה
+            קורה כשהחיבור נופל לרגע, כשמוצר לא נמצא, או כשמגיעה תשובה לא צפויה
+            מהצד השני - כי אינטגרציה שעובדת רק "כשהכול הולך חלק" לא שווה הרבה.
+            לפני העלייה לאוויר עוברים בדיקות על נתונים אמיתיים בסביבת בדיקה,
+            ובסיום מקבלים תיעוד קצר וברור על איך המערכת עובדת.
+          </p>
+
+          <h2>איך מתחילים</h2>
+
+          <p>
+            שלחו לנו פרטים על החנות שלכם ב-Shopify ועל המערכת שאתם רוצים לחבר
+            אליה - מה היא, מה היא צריכה לתת ולקבל. נחזור עם הערכת זמן ומחיר
+            סגור, ואם משהו לא ריאלי או לא תואם בין המערכות - נגיד את זה מראש.
+            רוצים לבדוק מה אפשר לחנות שלכם? שלחו לנו הודעת וואטסאפ.
+          </p>
+        </article>
+      </div>
+    </main>
+
+    <section class="article-cta" aria-labelledby="article-cta-title">
+      <div class="container">
+        <h2 id="article-cta-title">רוצים לחבר את החנות שלכם למערכת נוספת?</h2>
+        <a class="btn btn-whatsapp wa-link" href="#">
+          <svg class="icon-wa" aria-hidden="true" focusable="false">
+            <use href="#icon-whatsapp" />
+          </svg>
+          דברו איתנו בוואטסאפ
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>
+          <a href="/">One Stop Shop</a>
+          <span class="sep" aria-hidden="true">·</span>
+          <a href="/guides/">מדריכים</a>
+          <span class="sep" aria-hidden="true">·</span>
+          <a class="wa-link" href="#">וואטסאפ</a>
+          <span class="sep" aria-hidden="true">·</span>
+          <a class="email-link" href="#">אימייל</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="/script.js" defer></script>
+  </body>
+</html>
