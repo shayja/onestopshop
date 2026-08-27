@@ -47,6 +47,25 @@
   box-sizing: border-box;
 }
 
+.skip-link {
+  position: absolute;
+  inset-inline: 0;
+  margin-inline: auto;
+  width: fit-content;
+  top: -100%;
+  z-index: 100;
+  padding: 0.6rem 1.2rem;
+  background: var(--accent-deep);
+  color: var(--bg);
+  border-radius: 0 0 0.5rem 0.5rem;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.skip-link:focus-visible {
+  top: 0;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 4.5rem;
