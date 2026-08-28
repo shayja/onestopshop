@@ -993,7 +993,9 @@ footer a:hover {
 }
 
 /* Footer social icons - single sprite, one class per network.
-   Sprite cells are 24px wide in CSS pixels (PNG is 4x for retina). */
+   Sprite cells are 24px wide in CSS pixels (PNG is 4x for retina).
+   Two sprite variants exist: social-icons.png (monochrome muted)
+   and social-icons-color.png (brand colors). */
 .social-links {
   display: inline-flex;
   gap: 1rem;
@@ -1003,15 +1005,15 @@ footer a:hover {
   display: inline-block;
   inline-size: 24px;
   block-size: 24px;
-  background-image: url("images/social-icons.png");
+  background-image: url("images/social-icons-color.png");
   background-size: 144px 24px;
   background-repeat: no-repeat;
-  opacity: 0.7;
+  opacity: 1;
   transition: opacity 0.15s ease;
 }
 .social-icon:hover,
 .social-icon:focus-visible {
-  opacity: 1;
+  opacity: 0.8;
 }
 .si-facebook {
   background-position: 0 0;
