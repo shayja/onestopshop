@@ -992,6 +992,46 @@ footer a:hover {
   color: var(--border-light);
 }
 
+/* Footer social icons - single sprite, one class per network.
+   Sprite cells are 24px wide in CSS pixels (PNG is 4x for retina). */
+.social-links {
+  display: inline-flex;
+  gap: 1rem;
+  vertical-align: middle;
+}
+.social-icon {
+  display: inline-block;
+  inline-size: 24px;
+  block-size: 24px;
+  background-image: url("images/social-icons.png");
+  background-size: 144px 24px;
+  background-repeat: no-repeat;
+  opacity: 0.7;
+  transition: opacity 0.15s ease;
+}
+.social-icon:hover,
+.social-icon:focus-visible {
+  opacity: 1;
+}
+.si-facebook {
+  background-position: 0 0;
+}
+.si-whatsapp {
+  background-position: -24px 0;
+}
+.si-email {
+  background-position: -48px 0;
+}
+.si-x {
+  background-position: -72px 0;
+}
+.si-instagram {
+  background-position: -96px 0;
+}
+.si-tiktok {
+  background-position: -120px 0;
+}
+
 /* ============================================================
    Article page (guide) - long-form reading layout
    ============================================================ */
