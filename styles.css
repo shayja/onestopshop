@@ -1229,7 +1229,7 @@ footer a:hover {
 .section-header.compact { max-width: 50rem; margin-block-end: 2.25rem; }
 .section-header.compact h2 { font-family: "Heebo", sans-serif; font-size: clamp(1.8rem, 5vw, 2.65rem); line-height: 1.2; margin: 0 0 .8rem; }
 .section-header.compact .section-intro { margin: 0; }
-.package-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; align-items: start; }
+.package-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; align-items: start; }
 .package-card { display: flex; flex-direction: column; min-width: 0; padding: 1.65rem; border: 1px solid var(--border); border-radius: 18px; background: var(--surface); box-shadow: 0 12px 34px rgb(var(--ink-shadow) / .07); }
 .package-card.featured { border-color: var(--accent-deep); box-shadow: 0 16px 40px rgb(13 51 32 / .14); }
 .package-kicker { color: var(--accent-deep); font-weight: 700; font-size: .9rem; margin: 0 0 .5rem; }
