@@ -53,7 +53,7 @@ document.documentElement.classList.add("js");
 })();
 
 // Floating WhatsApp button - appears after scrolling past the hero.
-const hero = document.querySelector(".hero");
+const hero = document.querySelector(".hero, .packages-hero");
 const waFloat = document.querySelector(".wa-float");
 
 if (hero && waFloat && "IntersectionObserver" in window) {
