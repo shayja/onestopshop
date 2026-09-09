@@ -1,0 +1,366 @@
+---
+import Base from "../layouts/Base.astro";
+const ld0 = String.raw`{
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "One Stop Shop",
+        "url": "https://onestopshop.co.il/",
+        "sameAs": ["https://www.facebook.com/onestopshop.co.il"],
+        "logo": "https://onestopshop.co.il/favicon-512.png",
+        "image": "https://onestopshop.co.il/images/og-image.jpg",
+        "description": "בניית אתרים, אפליקציות ואוטומציה לעסקים קטנים, הכול במקום אחד. מאפיון ועד השקה.",
+        "areaServed": {
+          "@type": "Country",
+          "name": "Israel"
+        },
+        "inLanguage": "he",
+        "knowsAbout": [
+          "בניית אתרים",
+          "פיתוח אפליקציות",
+          "אוטומציה עסקית",
+          "סוכני AI"
+        ]
+      }`;
+---
+
+<Base
+  title={"One Stop Shop - בניית אתרים, אפליקציות ואוטומציה לעסקים"}
+  description={"One Stop Shop - בניית אתרים, אפליקציות ואוטומציה לעסקים קטנים, הכול במקום אחד. מאפיון ועד השקה, כל הפרויקטים חיים באוויר."}
+  path="/"
+  ogType="website"
+  ogTitle={"One Stop Shop - בניית אתרים, אפליקציות ואוטומציה לעסקים"}
+  ogDescription={"בניית אתרים, אפליקציות ואוטומציה לעסקים - הכול במקום אחד, מאפיון ועד השקה."}
+  variant="home"
+  waFloat={true}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={ld0} />
+  </Fragment>
+  <Fragment slot="head-late">
+    <script is:inline>
+      (function () {
+        var n = Math.floor(Math.random() * 3) + 1;
+        var size = window.matchMedia("(max-width: 700px)").matches ? "-m" : "";
+        var href = "images/hero-" + n + size + ".webp";
+        document.documentElement.style.setProperty(
+          "--hero-img",
+          'url("' + href + '")',
+        );
+        var l = document.createElement("link");
+        l.rel = "preload";
+        l.as = "image";
+        l.href = href;
+        l.setAttribute("fetchpriority", "high");
+        document.head.appendChild(l);
+      })();
+    </script>
+  </Fragment>
+    <header class="hero" id="hero">
+      <div class="hero-art" aria-hidden="true">
+        <div class="hero-photo"></div>
+        <div class="hero-overlay"></div>
+      </div>
+      <div class="container">
+        <h1 dir="ltr">
+          One Stop Shop<span class="accent-dot" aria-hidden="true">.</span>
+        </h1>
+        <p class="hero-value">
+          בניית אתרים, אפליקציות ואוטומציה לעסקים משלב הרעיון ועד העלייה
+          לאוויר<br /><span class="accent-dot" aria-hidden="true">&#8592;</span>
+          הכול במקום אחד.
+        </p>
+        <a class="btn btn-whatsapp wa-link" href="#">
+          <svg class="icon-wa" aria-hidden="true" focusable="false">
+            <use href="#icon-whatsapp" />
+          </svg>
+          דברו איתנו בוואטסאפ
+        </a>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="projects" id="projects" aria-labelledby="projects-title">
+        <div class="container">
+          <h2 id="projects-title">פרויקטים אחרונים</h2>
+
+          <article class="project reveal">
+            <div class="frame frame-browser">
+              <div class="frame-bar">
+                <span class="fd"></span><span class="fd"></span
+                ><span class="fd"></span
+                ><span class="frame-url">line808.com</span>
+              </div>
+              <img
+                src="images/project-dj.webp"
+                alt="צילום מסך של אתר line808 - יומן הופעות ונגן סטים"
+                width="1440"
+                height="767"
+                loading="lazy"
+              />
+            </div>
+            <p class="proj-num" aria-hidden="true">01</p>
+            <h3>אתר תדמית ל־DJ Line808</h3>
+            <p>
+              ל־Line808 לא הייתה נוכחות דיגיטלית והופעות נסגרו רק דרך טלפון
+              והמלצות. בנינו אתר תדמית עם יומן הופעות, נגן סטים ומערכת פניות -
+              היום לקוחות סוגרים דרך האתר.
+            </p>
+            <a
+              class="btn btn-link"
+              target="_blank"
+              rel="noopener"
+              href="https://line808.com/"
+              >קישור לאתר <span aria-hidden="true">&#8592;</span></a
+            >
+          </article>
+
+          <article class="project reveal">
+            <div class="frame frame-browser">
+              <div class="frame-bar">
+                <span class="fd"></span><span class="fd"></span
+                ><span class="fd"></span
+                ><span class="frame-url">emilyjacoby.me</span>
+              </div>
+              <img
+                src="images/project-musician.webp"
+                alt="צילום מסך של אתר הפסנתרנית אמילי יעקובי"
+                width="1440"
+                height="900"
+                loading="lazy"
+              />
+            </div>
+            <p class="proj-num" aria-hidden="true">02</p>
+            <h3>אתר לפסנתרנית אמילי יעקובי</h3>
+            <p>
+              אמילי הייתה צריכה מקום אחד שמרכז מוזיקה, הופעות ויצירת קשר לקהל
+              ולמפיקים. בנינו אתר אמן מהיר שמציג קטעי נגינה מרסיטלים ואפשרויות
+              שונות לשת״פ (ליווי סולנים/יות, הזמנה לרסיטלים, שיעורי נגינה).
+            </p>
+            <a
+              class="btn btn-link"
+              target="_blank"
+              rel="noopener"
+              href="https://emilyjacoby.me/he"
+              >קישור לאתר <span aria-hidden="true">&#8592;</span></a
+            >
+          </article>
+
+          <article class="project reveal">
+            <div class="frame frame-phone">
+              <img
+                src="images/project-app.webp"
+                alt="צילום מסך של אפליקציית שורד - ספירה לאחור"
+                width="780"
+                height="1566"
+                loading="lazy"
+              />
+            </div>
+            <p class="proj-num" aria-hidden="true">03</p>
+            <h3>שורד/Sored - אפליקציית מובייל</h3>
+            <p>
+              אפליקציה לתלמידים, סטודנטים וחיילים שמציגה כמה זמן נשאר לסיום שנת
+              הלימודים/סמסטר/תאריך השחרור, מתי יום ההולדת, החופשה הבאה וכד׳.
+            </p>
+            <a
+              class="btn btn-link"
+              target="_blank"
+              rel="noopener"
+              href="https://apps.apple.com/il/app/sored/id6774323194"
+              >קישור ל־App Store <span aria-hidden="true">&#8592;</span></a
+            >
+          </article>
+
+          <article class="project reveal">
+            <div class="frame frame-browser">
+              <div class="frame-bar">
+                <span class="fd"></span><span class="fd"></span
+                ><span class="fd"></span
+                ><span class="frame-url">warendorf.co.il</span>
+              </div>
+              <img
+                src="images/project-kitchen.webp"
+                alt="צילום מסך של אתר ורנדורף ישראל - מטבחי יוקרה מגרמניה"
+                width="1440"
+                height="744"
+                loading="lazy"
+              />
+            </div>
+            <p class="proj-num" aria-hidden="true">04</p>
+            <h3>ורנדורף ישראל - מטבחי יוקרה מגרמניה</h3>
+            <p>
+              אתר היבואן הישראלי של מטבחי היוקרה הגרמניים וורנדורף. האתר מציג את
+              הקולקציות, אולם התצוגה ופרטי יצירת קשר - חלון ראווה דיגיטלי למותג
+              יוקרה.
+            </p>
+            <a
+              class="btn btn-link"
+              target="_blank"
+              rel="noopener"
+              href="http://warendorf.co.il"
+              >קישור לאתר <span aria-hidden="true">&#8592;</span></a
+            >
+          </article>
+        </div>
+      </section>
+
+      <section
+        class="automation reveal"
+        id="automation"
+        aria-labelledby="automation-title"
+      >
+        <div class="container">
+          <div class="section-header">
+            <h2 id="automation-title">
+              אוטומציה עסקית וסוכני AI שחוסכים לכם עשרות שעות
+            </h2>
+            <p class="section-intro">
+              אנחנו לא רק בונים חלון ראווה - אנחנו מחברים את האתר שלכם למערכות
+              התפעוליות של העסק.
+            </p>
+          </div>
+
+          <div class="flows-grid">
+            <div class="flow-card">
+              <h3><span aria-hidden="true">⚡</span> תגובה מיידית ללידים</h3>
+              <ol class="flow-steps">
+                <li class="step">טופס / וואטסאפ נכנס</li>
+                <li class="step highlight">מענה AI מותאם אישית</li>
+                <li class="step">עדכון אוטומטי ב-CRM והתראה</li>
+              </ol>
+            </div>
+
+            <div class="flow-card">
+              <h3><span aria-hidden="true">📅</span> תיאום פגישות אוטומטי</h3>
+              <ol class="flow-steps">
+                <li class="step">בקשה לקביעת שיחה</li>
+                <li class="step highlight">פתיחת יומן בזמן אמת</li>
+                <li class="step">סנכרון מלא + תזכורת בוואטסאפ</li>
+              </ol>
+            </div>
+
+            <div class="flow-card">
+              <h3><span aria-hidden="true">🏷️</span> הצעת מחיר בלייב</h3>
+              <ol class="flow-steps">
+                <li class="step">העלאת תמונה / תיאור צורך</li>
+                <li class="step highlight">ניתוח אלגוריתמי מבוסס AI</li>
+                <li class="step">פלט מיידי של הצעת מחיר</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="how" aria-label="איך זה עובד">
+        <div class="container">
+          <ol class="how-strip">
+            <li>שיחת אפיון קצרה</li>
+            <li>הצעת מחיר סגורה לפרויקט</li>
+            <li>אתר באוויר תוך 2-3 שבועות</li>
+          </ol>
+        </div>
+      </section>
+
+      <section
+        class="included reveal"
+        id="included"
+        aria-labelledby="included-title"
+      >
+        <div class="container">
+          <h2 id="included-title">מה כולל פרויקט בניית אתר</h2>
+          <ul class="included-list">
+            <li>
+              <strong>פגישת אפיון</strong>
+              <p>שיחה אחת שבה מגדירים יחד מטרות, קהל ותכולה מדויקת.</p>
+            </li>
+            <li>
+              <strong>עיצוב מותאם אישית</strong>
+              <p>עיצוב מקורי שייבנה רק עבורכם וללא שימוש בתבניות מוכנות.</p>
+            </li>
+            <li>
+              <strong>הצגת התקדמות</strong>
+              <p>צפייה בהתקדמות הפרויקט בזמן אמת.</p>
+            </li>
+            <li>
+              <strong>התאמה מלאה לנייד</strong>
+              <p>רוב הלקוחות שלכם יגיעו מהטלפון, והאתר בנוי לזה קודם כול.</p>
+            </li>
+            <li>
+              <strong>הטמעת מערכות צד שלישי</strong>
+              <p>חיבור למערכות קיימות כמו CRM, ניוזלטרים, תשלום מקוון ועוד.</p>
+            </li>
+            <li>
+              <strong>יצירת קשר</strong>
+              <p>שילוב כל האפשרויות ליצירת קשר: וואטסאפ / שיחה / אימייל.</p>
+            </li>
+            <li>
+              <strong>טיפול מלא בכל הצד הטכני</strong>
+              <p>
+                רכישת דומיין, אחסון האתר, הגדרות DNS, תעודת SSL, קידום בסיסי
+                במנועי חיפוש וחיבור תקין של
+                <a href="/google-business-profile/">פרסום העסק בגוגל</a>.
+              </p>
+            </li>
+            <li>
+              <strong>שני סבבי תיקונים</strong>
+              <p>כלולים במחיר, כדי שהתוצאה תהיה בדיוק כמו שדמיינתם.</p>
+            </li>
+            <li>
+              <strong>חודש ליווי אחרי העלייה לאוויר</strong>
+              <p>תיקוני תקלות ושאלות, עלינו.</p>
+            </li>
+            <li>
+              <strong>הדרכה ומסירה מסודרת</strong>
+              <p>האתר שלכם, כולל גישה מלאה לכל החשבונות.</p>
+            </li>
+          </ul>
+          <p class="not-included">
+            <strong>לא כלול (ניתן להוסיף):</strong>
+            כתיבת תוכן שיווקי וצילום
+            <span class="sep" aria-hidden="true">·</span>
+            עיצוב לוגו ומיתוג
+            <span class="sep" aria-hidden="true">·</span>
+            עלות שנתית של דומיין ואחסון (משולמת ישירות לספק, עשרות שקלים בשנה)
+            <span class="sep" aria-hidden="true">·</span>
+            אחזקה שוטפת - ראו ליווי חודשי
+          </p>
+        </div>
+      </section>
+
+      <section
+        class="final-cta reveal"
+        id="contact"
+        aria-labelledby="contact-title"
+      >
+        <div class="container">
+          <div class="section-header">
+            <h2 id="contact-title">רוצים שנבנה לכם אתר/אפליקציה?</h2>
+          </div>
+          <p>נשמח לשמוע על הפרויקט שלכם.</p>
+          <div class="cta-row">
+            <a class="btn btn-whatsapp wa-link" href="#">
+              <svg class="icon-wa" aria-hidden="true" focusable="false">
+                <use href="#icon-whatsapp" />
+              </svg>
+              דברו איתנו בוואטסאפ
+            </a>
+            <a class="btn btn-email email-link" href="#">
+              <svg
+                class="icon-wa"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  d="M3 6.5A1.5 1.5 0 0 1 4.5 5h15A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-11Zm.5.5 8.5 6L20.5 7"
+                />
+              </svg>
+              שלחו לנו מייל
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+</Base>

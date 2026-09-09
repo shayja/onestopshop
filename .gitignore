@@ -4,3 +4,7 @@ _preview.html
 .vscode/
 *.md
 CNAME
+node_modules/
+dist/
+.astro/
+!public/CNAME

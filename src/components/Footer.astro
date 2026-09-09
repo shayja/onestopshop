@@ -1,0 +1,42 @@
+---
+// variant "home": brand is plain text (the page IS home).
+// variant "packages": adds the packages link between brand and guides.
+// variant "article": brand links home, then guides.
+interface Props {
+  variant: "home" | "article" | "packages";
+}
+const { variant } = Astro.props;
+---
+
+<footer>
+  <div class="container">
+    <p>
+      {variant === "home" ? "One Stop Shop" : <a href="/">One Stop Shop</a>}
+      <span class="sep" aria-hidden="true">·</span>
+      {
+        variant === "packages" && (
+          <>
+            <a href="/website-packages/">חבילות</a>
+            <span class="sep" aria-hidden="true">·</span>
+          </>
+        )
+      }
+      <a href="/guides/">מדריכים</a>
+      <span class="sep" aria-hidden="true">·</span>
+      <span class="social-links">
+        <a
+          class="social-icon si-facebook"
+          href="https://www.facebook.com/onestopshop.co.il"
+          target="_blank"
+          rel="noopener"
+          aria-label="פייסבוק"></a>
+        <a
+          class="social-icon si-whatsapp wa-link"
+          href="#"
+          aria-label="וואטסאפ"></a>
+        <a class="social-icon si-email email-link" href="#" aria-label="אימייל"
+        ></a>
+      </span>
+    </p>
+  </div>
+</footer>
