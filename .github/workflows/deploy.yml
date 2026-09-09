@@ -22,14 +22,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Minify CSS and JS in place
-        run: |
-          npx esbuild styles.css --minify --allow-overwrite --outfile=styles.css
-          npx esbuild script.js --minify --allow-overwrite --outfile=script.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: dist
 
       - id: deployment
         uses: actions/deploy-pages@v4
