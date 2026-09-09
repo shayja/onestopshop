@@ -1,8 +1,7 @@
 ---
 // variant "home": index page - anchor links into the one-pager.
 // variant "packages": packages page - marks itself with aria-current.
-// variant "article": every other inner page (no packages link, matching
-// the currently shipped markup - see the drift notes in the migration PR).
+// variant "article": every other inner page.
 interface Props {
   variant: "home" | "article" | "packages";
 }
@@ -28,11 +27,13 @@ const { variant } = Astro.props;
           <>
             <li><a href="/">ראשי</a></li>
             <li><a href="/#projects">פרויקטים</a></li>
-            {variant === "packages" && (
-              <li>
-                <a href="/website-packages/" aria-current="page">חבילות</a>
-              </li>
-            )}
+            <li>
+              <a
+                href="/website-packages/"
+                aria-current={variant === "packages" ? "page" : undefined}
+                >חבילות</a
+              >
+            </li>
             <li><a href="/guides/">מדריכים</a></li>
             <li><a href="/#contact">יצירת קשר</a></li>
           </>
