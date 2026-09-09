@@ -41,7 +41,7 @@ const ld0 = String.raw`{
       (function () {
         var n = Math.floor(Math.random() * 3) + 1;
         var size = window.matchMedia("(max-width: 700px)").matches ? "-m" : "";
-        var href = "images/hero-" + n + size + ".webp";
+        var href = "/images/hero-" + n + size + ".webp";
         document.documentElement.style.setProperty(
           "--hero-img",
           'url("' + href + '")',
