@@ -10,5 +10,9 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.6.0",
     "astro": "^7.3.2"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "fsevents@2.3.3": true
   }
 }
