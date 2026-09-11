@@ -1,5 +1,55 @@
 ---
+import { getImage, Picture } from "astro:assets";
 import Base from "../layouts/Base.astro";
+import hero1 from "../assets/images/hero-1.webp";
+import hero2 from "../assets/images/hero-2.webp";
+import hero3 from "../assets/images/hero-3.webp";
+import automationPhoto from "../assets/images/automation-photo.webp";
+import includedPhoto from "../assets/images/included-photo.webp";
+import ctaPhoto from "../assets/images/cta-photo.webp";
+import projectDj from "../assets/images/project-dj.jpg";
+import projectMusician from "../assets/images/project-musician.webp";
+import projectApp from "../assets/images/project-app.webp";
+import projectKitchen from "../assets/images/project-kitchen.webp";
+
+// The hero and band photos are CSS backgrounds, so they can't go through
+// <Picture>; generate a desktop and a mobile rendition for each here and
+// inject the hashed URLs via the style/script tags in the head below.
+// 700px is the same breakpoint the old hand-made -m variants used.
+const rendition = (src: ImageMetadata, width: number, quality: number) =>
+  getImage({ src, format: "webp", width, quality });
+
+const heroDesktop = await Promise.all(
+  [hero1, hero2, hero3].map((h) => rendition(h, 1600, 75)),
+);
+const heroMobile = await Promise.all(
+  [hero1, hero2, hero3].map((h) => rendition(h, 900, 75)),
+);
+
+// The bands render under a heavy ivory wash (--band-wash 0.82-0.9), so a
+// lower encode quality is invisible there and saves real bytes.
+const bands = await Promise.all(
+  [
+    { selector: ".automation", src: automationPhoto },
+    { selector: ".included", src: includedPhoto },
+    { selector: ".final-cta", src: ctaPhoto },
+  ].map(async ({ selector, src }) => ({
+    selector,
+    desktop: (await rendition(src, 1600, 65)).src,
+    mobile: (await rendition(src, 900, 65)).src,
+  })),
+);
+
+// hero-1 is the no-JS fallback (the inline script overrides --hero-img).
+const bgCss = [
+  `.hero-photo{background-image:var(--hero-img,url("${heroDesktop[0].src}"))}`,
+  ...bands.map((b) => `${b.selector}{--band-img:url("${b.desktop}")}`),
+  `@media (max-width:700px){`,
+  `.hero-photo{background-image:var(--hero-img,url("${heroMobile[0].src}"))}`,
+  ...bands.map((b) => `${b.selector}{--band-img:url("${b.mobile}")}`),
+  `}`,
+].join("");
+
 const ld0 = String.raw`{
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
@@ -37,11 +87,18 @@ const ld0 = String.raw`{
     <script type="application/ld+json" set:html={ld0} />
   </Fragment>
   <Fragment slot="head-late">
-    <script is:inline>
+    <style is:inline set:html={bgCss}></style>
+    <script
+      is:inline
+      define:vars={{
+        heroDesktop: heroDesktop.map((h) => h.src),
+        heroMobile: heroMobile.map((h) => h.src),
+      }}
+    >
       (function () {
-        var n = Math.floor(Math.random() * 3) + 1;
-        var size = window.matchMedia("(max-width: 700px)").matches ? "-m" : "";
-        var href = "/images/hero-" + n + size + ".webp";
+        var n = Math.floor(Math.random() * 3);
+        var mobile = window.matchMedia("(max-width: 700px)").matches;
+        var href = (mobile ? heroMobile : heroDesktop)[n];
         document.documentElement.style.setProperty(
           "--hero-img",
           'url("' + href + '")',
@@ -90,11 +147,13 @@ const ld0 = String.raw`{
                 ><span class="fd"></span
                 ><span class="frame-url">line808.com</span>
               </div>
-              <img
-                src="/images/project-dj.webp"
-                alt="צילום מסך של אתר line808 - יומן הופעות ונגן סטים"
-                width="1440"
-                height="767"
+              <Picture
+                src={projectDj}
+                formats={["avif"]}
+                fallbackFormat="webp"
+                widths={[480, 760, 976, 1440]}
+                sizes="(max-width: 1024px) calc(100vw - 3rem), 976px"
+                alt="צילום מסך של אתר line808 - עמוד הבית של DJ Line808"
                 loading="lazy"
               />
             </div>
@@ -121,11 +180,13 @@ const ld0 = String.raw`{
                 ><span class="fd"></span
                 ><span class="frame-url">emilyjacoby.me</span>
               </div>
-              <img
-                src="/images/project-musician.webp"
+              <Picture
+                src={projectMusician}
+                formats={["avif"]}
+                fallbackFormat="webp"
+                widths={[480, 760, 976, 1440]}
+                sizes="(max-width: 1024px) calc(100vw - 3rem), 976px"
                 alt="צילום מסך של אתר הפסנתרנית אמילי יעקובי"
-                width="1440"
-                height="900"
                 loading="lazy"
               />
             </div>
@@ -147,11 +208,13 @@ const ld0 = String.raw`{
 
           <article class="project reveal">
             <div class="frame frame-phone">
-              <img
-                src="/images/project-app.webp"
+              <Picture
+                src={projectApp}
+                formats={["avif"]}
+                fallbackFormat="webp"
+                widths={[240, 480, 780]}
+                sizes="(max-width: 375px) 64vw, 240px"
                 alt="צילום מסך של אפליקציית שורד - ספירה לאחור"
-                width="780"
-                height="1566"
                 loading="lazy"
               />
             </div>
@@ -177,11 +240,13 @@ const ld0 = String.raw`{
                 ><span class="fd"></span
                 ><span class="frame-url">warendorf.co.il</span>
               </div>
-              <img
-                src="/images/project-kitchen.webp"
+              <Picture
+                src={projectKitchen}
+                formats={["avif"]}
+                fallbackFormat="webp"
+                widths={[480, 760, 976, 1440]}
+                sizes="(max-width: 1024px) calc(100vw - 3rem), 976px"
                 alt="צילום מסך של אתר ורנדורף ישראל - מטבחי יוקרה מגרמניה"
-                width="1440"
-                height="744"
                 loading="lazy"
               />
             </div>

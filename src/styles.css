@@ -285,12 +285,12 @@ a {
 }
 
 /* Full-bleed photo. White studio backdrop blends into the ivory page.
-   The image is picked at random per visit (inline script in <head>);
-   hero-1 is the no-JS fallback. */
+   The image is picked at random per visit (inline script in <head>).
+   The hashed image URLs (incl. the hero-1 no-JS fallback) are injected
+   by index.astro, which generates them through the asset pipeline. */
 .hero-photo {
   position: absolute;
   inset: 0;
-  background-image: var(--hero-img, url("/images/hero-1.webp"));
   background-position: center 28%;
   background-size: cover;
   background-repeat: no-repeat;
@@ -598,13 +598,13 @@ a {
   overflow: hidden;
   isolation: isolate;
   /* darkest photo of the three → heaviest wash */
-  --band-img: url("/images/automation-photo.webp");
   --band-wash: 0.9;
 }
 
 /* Shared photo-band backdrop: a photo under an ivory wash that melts
-   into the page at the top and bottom. Each section sets --band-img
-   (the photo) and --band-wash (how much ivory quiets it) */
+   into the page at the top and bottom. Each section sets --band-wash
+   (how much ivory quiets it); the --band-img photo URLs are injected
+   by index.astro from the asset pipeline (hashed, per-viewport). */
 .automation::after,
 .included::after,
 .final-cta::after {
@@ -825,7 +825,6 @@ a {
   padding-block: 2rem 6rem;
   overflow: hidden;
   isolation: isolate;
-  --band-img: url("/images/included-photo.webp");
   --band-wash: 0.86;
 }
 
@@ -922,7 +921,6 @@ a {
   overflow: hidden;
   isolation: isolate;
   /* characterization-meeting shot; lightest wash of the three */
-  --band-img: url("/images/cta-photo.webp");
   --band-wash: 0.82;
 }
 
@@ -1196,19 +1194,6 @@ footer a:hover {
   }
 }
 
-/* Small screens load the lighter band photos.
-   Kept last so it wins over the base --band-img declarations above. */
-@media (max-width: 700px) {
-  .automation {
-    --band-img: url("/images/automation-photo-m.webp");
-  }
-  .included {
-    --band-img: url("/images/included-photo-m.webp");
-  }
-  .final-cta {
-    --band-img: url("/images/cta-photo-m.webp");
-  }
-}
 
 /* ============================================================
    Packages page
