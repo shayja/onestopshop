@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import ArticleCta from "../components/ArticleCta.astro";
 const ld0 = String.raw`{
         "@context": "https://schema.org",
         "@type": "CollectionPage",
@@ -357,15 +358,5 @@ const ld0 = String.raw`{
       </div>
     </main>
 
-    <section class="article-cta" aria-labelledby="article-cta-title">
-      <div class="container">
-        <h2 id="article-cta-title">יש שאלה שלא מצאתם עליה תשובה?</h2>
-        <a class="btn btn-whatsapp wa-link" href="#">
-          <svg class="icon-wa" aria-hidden="true" focusable="false">
-            <use href="#icon-whatsapp" />
-          </svg>
-          דברו איתנו בוואטסאפ
-        </a>
-      </div>
-    </section>
+    <ArticleCta title="יש שאלה שלא מצאתם עליה תשובה?" />
 </Base>

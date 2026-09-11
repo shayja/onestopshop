@@ -67,8 +67,13 @@
 }
 
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 4.5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
@@ -992,10 +997,9 @@ footer a:hover {
   color: var(--border-light);
 }
 
-/* Footer social icons - single sprite, one class per network.
-   Sprite cells are 24px wide in CSS pixels (PNG is 4x for retina).
-   Two sprite variants exist: social-icons.png (monochrome muted)
-   and social-icons-color.png (brand colors). */
+/* Footer social icons - single sprite (social-icons-color.png), one
+   class per network. Sprite cells are 24px wide in CSS pixels (PNG is
+   4x for retina). */
 .social-links {
   display: inline-flex;
   gap: 1rem;
@@ -1023,15 +1027,6 @@ footer a:hover {
 }
 .si-email {
   background-position: -48px 0;
-}
-.si-x {
-  background-position: -72px 0;
-}
-.si-instagram {
-  background-position: -96px 0;
-}
-.si-tiktok {
-  background-position: -120px 0;
 }
 
 /* ============================================================
@@ -1545,9 +1540,9 @@ footer a:hover {
     color: var(--muted);
     font-size: 0.8rem;
   }
-  /* only navs that gained the fifth "חבילות" item need the extra
-     room - the four-item article navs keep פרויקטים visible */
-  .nav-links:has(li:nth-child(5)) li:nth-child(2) {
+  /* every nav carries five items since "חבילות" was added, so on small
+     screens פרויקטים is dropped site-wide to keep the bar on one line */
+  .nav-links li:nth-child(2) {
     display: none;
   }
 }

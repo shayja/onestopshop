@@ -1,29 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-const ld0 = String.raw`{
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "פרופיל עסקי בגוגל - המדריך המלא לעסק קטן",
-        "description": "איך מקימים פרופיל עסקי בגוגל (Google Business Profile) בחינם, איך מופיעים בחיפושים מקומיים ובמפות, איך אוספים ביקורות נכון - מדריך צעד-צעד לבעלי עסקים.",
-        "inLanguage": "he",
-        "mainEntityOfPage": "https://onestopshop.co.il/google-business-profile/",
-        "image": "https://onestopshop.co.il/images/og-image.jpg",
-        "datePublished": "2026-08-23",
-        "dateModified": "2026-08-23",
-        "author": {
-          "@type": "Organization",
-          "name": "One Stop Shop",
-          "url": "https://onestopshop.co.il/"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "One Stop Shop",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://onestopshop.co.il/favicon-512.png"
-          }
-        }
-      }`;
+import ArticleCta from "../components/ArticleCta.astro";
 ---
 
 <Base
@@ -33,10 +10,8 @@ const ld0 = String.raw`{
   ogType="article"
   ogTitle={"פרופיל עסקי בגוגל - המדריך המלא לעסק קטן"}
   ogDescription={"איך מקימים פרופיל עסקי בגוגל בחינם, איך מופיעים בחיפושים מקומיים ובמפות, ואיך אוספים ביקורות נכון - צעד-צעד."}
+  datePublished="2026-08-23"
 >
-  <Fragment slot="head">
-    <script type="application/ld+json" set:html={ld0} />
-  </Fragment>
     <main class="article" id="main-content">
       <div class="container">
         <article>
@@ -180,15 +155,5 @@ const ld0 = String.raw`{
       </div>
     </main>
 
-    <section class="article-cta" aria-labelledby="article-cta-title">
-      <div class="container">
-        <h2 id="article-cta-title">שאלות על הפרופיל העסקי שלכם?</h2>
-        <a class="btn btn-whatsapp wa-link" href="#">
-          <svg class="icon-wa" aria-hidden="true" focusable="false">
-            <use href="#icon-whatsapp" />
-          </svg>
-          דברו איתנו בוואטסאפ
-        </a>
-      </div>
-    </section>
+    <ArticleCta title="שאלות על הפרופיל העסקי שלכם?" />
 </Base>

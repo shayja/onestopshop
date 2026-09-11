@@ -1,29 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-const ld0 = String.raw`{
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "תחזוקת אתר לעסק - מה זה כולל ולמה זה קריטי",
-        "description": "למה אתר צריך תחזוקה שוטפת, מה קורה לאתרים מוזנחים, מה כולל ליווי חודשי סביר, מה אפשר לעשות לבד - והשאלות שכדאי לשאול לפני שסוגרים הסדר תחזוקה.",
-        "inLanguage": "he",
-        "mainEntityOfPage": "https://onestopshop.co.il/website-maintenance/",
-        "image": "https://onestopshop.co.il/images/og-image.jpg",
-        "datePublished": "2026-08-23",
-        "dateModified": "2026-08-23",
-        "author": {
-          "@type": "Organization",
-          "name": "One Stop Shop",
-          "url": "https://onestopshop.co.il/"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "One Stop Shop",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://onestopshop.co.il/favicon-512.png"
-          }
-        }
-      }`;
+import ArticleCta from "../components/ArticleCta.astro";
 ---
 
 <Base
@@ -33,10 +10,8 @@ const ld0 = String.raw`{
   ogType="article"
   ogTitle={"תחזוקת אתר לעסק - מה זה כולל ולמה זה קריטי"}
   ogDescription={"מה קורה לאתרים מוזנחים, מה כוללת תחזוקה סבירה, מה אפשר לעשות לבד ומתי נכון ליווי חודשי - וכמה זה אמור לעלות."}
+  datePublished="2026-08-23"
 >
-  <Fragment slot="head">
-    <script type="application/ld+json" set:html={ld0} />
-  </Fragment>
     <main class="article" id="main-content">
       <div class="container">
         <article>
@@ -174,15 +149,5 @@ const ld0 = String.raw`{
       </div>
     </main>
 
-    <section class="article-cta" aria-labelledby="article-cta-title">
-      <div class="container">
-        <h2 id="article-cta-title">רוצים לדעת מה האתר שלכם באמת צריך?</h2>
-        <a class="btn btn-whatsapp wa-link" href="#">
-          <svg class="icon-wa" aria-hidden="true" focusable="false">
-            <use href="#icon-whatsapp" />
-          </svg>
-          דברו איתנו בוואטסאפ
-        </a>
-      </div>
-    </section>
+    <ArticleCta title="רוצים לדעת מה האתר שלכם באמת צריך?" />
 </Base>

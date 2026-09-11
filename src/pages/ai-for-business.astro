@@ -1,29 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-const ld0 = String.raw`{
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "AI בעבודה היומיומית של עסק קטן - מדריך מעשי",
-        "description": "איך עסק קטן משתמש בבינה מלאכותית ביום-יום: ניסוח הודעות והצעות מחיר, תוכן שיווקי, סיכומים ותרגום - כללי העבודה הנכונים, גבולות הפרטיות, ומתי עוברים מכלים לאוטומציה.",
-        "inLanguage": "he",
-        "mainEntityOfPage": "https://onestopshop.co.il/ai-for-business/",
-        "image": "https://onestopshop.co.il/images/og-image.jpg",
-        "datePublished": "2026-08-23",
-        "dateModified": "2026-08-23",
-        "author": {
-          "@type": "Organization",
-          "name": "One Stop Shop",
-          "url": "https://onestopshop.co.il/"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "One Stop Shop",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://onestopshop.co.il/favicon-512.png"
-          }
-        }
-      }`;
+import ArticleCta from "../components/ArticleCta.astro";
 ---
 
 <Base
@@ -33,10 +10,8 @@ const ld0 = String.raw`{
   ogType="article"
   ogTitle={"AI בעבודה היומיומית של עסק קטן - מדריך מעשי"}
   ogDescription={"ניסוח הודעות, הצעות מחיר, תוכן, סיכומים ותרגום - כללי העבודה שמוציאים תוצאות טובות, גבולות הפרטיות, ומתי עוברים לאוטומציה."}
+  datePublished="2026-08-23"
 >
-  <Fragment slot="head">
-    <script type="application/ld+json" set:html={ld0} />
-  </Fragment>
     <main class="article" id="main-content">
       <div class="container">
         <article>
@@ -149,15 +124,5 @@ const ld0 = String.raw`{
       </div>
     </main>
 
-    <section class="article-cta" aria-labelledby="article-cta-title">
-      <div class="container">
-        <h2 id="article-cta-title">יש משימה שחוזרת אצלכם כל שבוע?</h2>
-        <a class="btn btn-whatsapp wa-link" href="#">
-          <svg class="icon-wa" aria-hidden="true" focusable="false">
-            <use href="#icon-whatsapp" />
-          </svg>
-          דברו איתנו בוואטסאפ
-        </a>
-      </div>
-    </section>
+    <ArticleCta title="יש משימה שחוזרת אצלכם כל שבוע?" />
 </Base>

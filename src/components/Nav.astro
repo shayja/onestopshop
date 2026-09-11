@@ -6,38 +6,33 @@ interface Props {
   variant: "home" | "article" | "packages";
 }
 const { variant } = Astro.props;
+
+// On the one-pager, section links are bare anchors; everywhere else they
+// point back into "/". Only the first two hrefs differ between variants.
+const home = variant === "home";
+const links = [
+  { href: home ? "#hero" : "/", label: "ראשי" },
+  { href: home ? "#projects" : "/#projects", label: "פרויקטים" },
+  { href: "/website-packages/", label: "חבילות", current: variant === "packages" },
+  { href: "/guides/", label: "מדריכים" },
+  { href: home ? "#contact" : "/#contact", label: "יצירת קשר" },
+];
 ---
 
 <nav class="topnav" aria-label="ניווט ראשי">
   <div class="container nav-inner">
-    <a class="brand" href={variant === "home" ? "#hero" : "/"} dir="ltr"
+    <a class="brand" href={home ? "#hero" : "/"} dir="ltr"
       >One Stop Shop<span class="accent-dot" aria-hidden="true">.</span></a
     >
     <ul class="nav-links">
       {
-        variant === "home" ? (
-          <>
-            <li><a href="#hero">ראשי</a></li>
-            <li><a href="#projects">פרויקטים</a></li>
-            <li><a href="/website-packages/">חבילות</a></li>
-            <li><a href="/guides/">מדריכים</a></li>
-            <li><a href="#contact">יצירת קשר</a></li>
-          </>
-        ) : (
-          <>
-            <li><a href="/">ראשי</a></li>
-            <li><a href="/#projects">פרויקטים</a></li>
-            <li>
-              <a
-                href="/website-packages/"
-                aria-current={variant === "packages" ? "page" : undefined}
-                >חבילות</a
-              >
-            </li>
-            <li><a href="/guides/">מדריכים</a></li>
-            <li><a href="/#contact">יצירת קשר</a></li>
-          </>
-        )
+        links.map(({ href, label, current }) => (
+          <li>
+            <a href={href} aria-current={current ? "page" : undefined}>
+              {label}
+            </a>
+          </li>
+        ))
       }
     </ul>
   </div>

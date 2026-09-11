@@ -13,6 +13,8 @@ interface Props {
   ogImageAlt?: string;
   variant?: "home" | "article" | "packages"; // picks nav + footer flavor
   waFloat?: boolean;
+  datePublished?: string; // presence turns on the Article JSON-LD
+  dateModified?: string;
 }
 
 const {
@@ -25,10 +27,41 @@ const {
   ogImageAlt = "One Stop Shop - בניית אתרים, אפליקציות ואוטומציה לעסקים",
   variant = "article",
   waFloat = false,
+  datePublished,
+  dateModified,
 } = Astro.props;
 
 const canonical = `https://onestopshop.co.il${path}`;
 const ogImage = "https://onestopshop.co.il/images/og-image.jpg";
+
+// Article schema is built here from the same strings the meta tags use,
+// so headline/description can't drift from the page's title/description.
+const articleSchema = datePublished
+  ? JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: ogTitle,
+      description,
+      inLanguage: "he",
+      mainEntityOfPage: canonical,
+      image: ogImage,
+      datePublished,
+      dateModified: dateModified ?? datePublished,
+      author: {
+        "@type": "Organization",
+        name: "One Stop Shop",
+        url: "https://onestopshop.co.il/",
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "One Stop Shop",
+        logo: {
+          "@type": "ImageObject",
+          url: "https://onestopshop.co.il/favicon-512.png",
+        },
+      },
+    })
+  : null;
 ---
 
 <!doctype html>
@@ -55,6 +88,8 @@ const ogImage = "https://onestopshop.co.il/images/og-image.jpg";
     <meta name="twitter:title" content={ogTitle} />
     <meta name="twitter:description" content={ogDescription} />
     <meta name="twitter:image" content={ogImage} />
+
+    {articleSchema && <script type="application/ld+json" set:html={articleSchema} />}
 
     <slot name="head" />
 

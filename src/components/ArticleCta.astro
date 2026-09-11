@@ -1,0 +1,19 @@
+---
+// Shared trailing CTA for content pages - only the heading varies per page.
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<section class="article-cta" aria-labelledby="article-cta-title">
+  <div class="container">
+    <h2 id="article-cta-title">{title}</h2>
+    <a class="btn btn-whatsapp wa-link" href="#">
+      <svg class="icon-wa" aria-hidden="true" focusable="false">
+        <use href="#icon-whatsapp"></use>
+      </svg>
+      דברו איתנו בוואטסאפ
+    </a>
+  </div>
+</section>

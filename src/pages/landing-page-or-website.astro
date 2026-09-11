@@ -1,68 +1,26 @@
 ---
 import Base from "../layouts/Base.astro";
-const ld0 = String.raw`{
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "דף נחיתה או אתר תדמית - מה העסק שלכם באמת צריך?",
-        "description": "דף נחיתה או אתר מלא? ההבדלים בתכלס: מה כל אחד עושה, מתי מספיק דף נחיתה, מתי חייבים אתר תדמית, כמה זה עולה ולוקח, ואיך מתחילים קטן בלי לזרוק כסף.",
-        "inLanguage": "he",
-        "mainEntityOfPage": "https://onestopshop.co.il/landing-page-or-website/",
-        "image": "https://onestopshop.co.il/images/og-image.jpg",
-        "datePublished": "2026-08-23",
-        "dateModified": "2026-08-23",
-        "author": {
-          "@type": "Organization",
-          "name": "One Stop Shop",
-          "url": "https://onestopshop.co.il/"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "One Stop Shop",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://onestopshop.co.il/favicon-512.png"
-          }
-        }
-      }`;
-const ld1 = String.raw`{
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "inLanguage": "he",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "אפשר להפוך דף נחיתה לאתר אחר כך?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "כן, ובתכנון נכון זה אפילו המסלול המומלץ למי שמתחיל בקמפיין: בונים את הדף על הדומיין הקבוע שלכם, בעיצוב שיהפוך לשפת האתר - וכשמגיע שלב ההרחבה, הדף הופך לעמוד באתר במקום להיזרק."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "מה עדיף לקידום בגוגל?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "אתר תדמית, באופן חד-משמעי - לדף נחיתה בודד כמעט אין נוכחות אורגנית, הוא בנוי לתנועה ממומנת."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "האם דף נחיתה חייב טופס, או שאפשר וואטסאפ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "בישראל, לעסקים קטנים, כפתור וואטסאפ ממיר לרוב טוב יותר מטופס - פחות חיכוך, יותר אנושי; אפשר גם לשלב."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "כמה דפי נחיתה צריך?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "אחד לכל הצעה נפרדת: קמפיין למבצע X מקבל דף משלו, שירות Y דף משלו - דף אחד שמנסה למכור הכול חוזר להיות אתר, רק בלי היתרונות שלו."
-            }
-          }
-        ]
-      }`;
+import Faq from "../components/Faq.astro";
+import ArticleCta from "../components/ArticleCta.astro";
+
+const faq = [
+  {
+    q: `אפשר להפוך דף נחיתה לאתר אחר כך?`,
+    a: `כן, ובתכנון נכון זה אפילו המסלול המומלץ למי שמתחיל בקמפיין: בונים את הדף על הדומיין הקבוע שלכם, בעיצוב שיהפוך לשפת האתר - וכשמגיע שלב ההרחבה, הדף הופך לעמוד באתר במקום להיזרק.`,
+  },
+  {
+    q: `מה עדיף לקידום בגוגל?`,
+    a: `אתר תדמית, באופן חד-משמעי - לדף נחיתה בודד כמעט אין נוכחות אורגנית, הוא בנוי לתנועה ממומנת.`,
+  },
+  {
+    q: `האם דף נחיתה חייב טופס, או שאפשר וואטסאפ?`,
+    a: `בישראל, לעסקים קטנים, כפתור וואטסאפ ממיר לרוב טוב יותר מטופס - פחות חיכוך, יותר אנושי; אפשר גם לשלב.`,
+  },
+  {
+    q: `כמה דפי נחיתה צריך?`,
+    a: `אחד לכל הצעה נפרדת: קמפיין למבצע X מקבל דף משלו, שירות Y דף משלו - דף אחד שמנסה למכור הכול חוזר להיות אתר, רק בלי היתרונות שלו.`,
+  },
+];
 ---
 
 <Base
@@ -72,11 +30,8 @@ const ld1 = String.raw`{
   ogType="article"
   ogTitle={"דף נחיתה או אתר תדמית - מה העסק שלכם באמת צריך?"}
   ogDescription={"מה כל אחד עושה, מתי מספיק דף נחיתה, מתי חייבים אתר תדמית, ואיך מתחילים קטן בלי לבנות פעמיים."}
+  datePublished="2026-08-23"
 >
-  <Fragment slot="head">
-    <script type="application/ld+json" set:html={ld0} />
-    <script type="application/ld+json" set:html={ld1} />
-  </Fragment>
     <main class="article" id="main-content">
       <div class="container">
         <article>
@@ -199,32 +154,7 @@ const ld1 = String.raw`{
             מקורות התנועה שלו.
           </p>
 
-          <h2>שאלות נפוצות</h2>
-
-          <h3>אפשר להפוך דף נחיתה לאתר אחר כך?</h3>
-          <p>
-            כן, ובתכנון נכון זה אפילו המסלול המומלץ למי שמתחיל בקמפיין: בונים את
-            הדף על הדומיין הקבוע שלכם, בעיצוב שיהפוך לשפת האתר - וכשמגיע שלב
-            ההרחבה, הדף הופך לעמוד באתר במקום להיזרק.
-          </p>
-
-          <h3>מה עדיף לקידום בגוגל?</h3>
-          <p>
-            אתר תדמית, באופן חד-משמעי - לדף נחיתה בודד כמעט אין נוכחות אורגנית,
-            הוא בנוי לתנועה ממומנת.
-          </p>
-
-          <h3>האם דף נחיתה חייב טופס, או שאפשר וואטסאפ?</h3>
-          <p>
-            בישראל, לעסקים קטנים, כפתור וואטסאפ ממיר לרוב טוב יותר מטופס - פחות
-            חיכוך, יותר אנושי; אפשר גם לשלב.
-          </p>
-
-          <h3>כמה דפי נחיתה צריך?</h3>
-          <p>
-            אחד לכל הצעה נפרדת: קמפיין למבצע X מקבל דף משלו, שירות Y דף משלו -
-            דף אחד שמנסה למכור הכול חוזר להיות אתר, רק בלי היתרונות שלו.
-          </p>
+          <Faq items={faq} />
 
           <h2>השורה התחתונה</h2>
 
@@ -247,15 +177,5 @@ const ld1 = String.raw`{
       </div>
     </main>
 
-    <section class="article-cta" aria-labelledby="article-cta-title">
-      <div class="container">
-        <h2 id="article-cta-title">מתלבטים מה נכון לעסק שלכם?</h2>
-        <a class="btn btn-whatsapp wa-link" href="#">
-          <svg class="icon-wa" aria-hidden="true" focusable="false">
-            <use href="#icon-whatsapp" />
-          </svg>
-          דברו איתנו בוואטסאפ
-        </a>
-      </div>
-    </section>
+    <ArticleCta title="מתלבטים מה נכון לעסק שלכם?" />
 </Base>

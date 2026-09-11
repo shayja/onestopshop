@@ -1,0 +1,42 @@
+---
+// Article-page FAQ: the {q, a} items are the single source for both the
+// visible h3/p markup and the FAQPage JSON-LD, so they can never drift.
+// Answers may contain inline HTML (links); the schema gets a plain-text copy.
+interface FaqItem {
+  q: string;
+  a: string;
+}
+interface Props {
+  title?: string;
+  items: FaqItem[];
+}
+const { title = "שאלות נפוצות", items } = Astro.props;
+
+const plain = (html: string) =>
+  html
+    .replace(/<[^>]+>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const schema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  inLanguage: "he",
+  mainEntity: items.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: plain(a) },
+  })),
+});
+---
+
+<h2>{title}</h2>
+{
+  items.map(({ q, a }) => (
+    <>
+      <h3>{q}</h3>
+      <p set:html={a} />
+    </>
+  ))
+}
+<script type="application/ld+json" set:html={schema} />

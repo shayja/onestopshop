@@ -1,5 +1,4 @@
 // Contact-link assembly, GA4 click events, floating WhatsApp button, reveal fade. Without this file the page still renders, but contact CTAs keep their placeholder href="#" - the real WhatsApp/email links only exist at runtime.
-
 document.documentElement.classList.add("js");
 
 // Contact details are assembled at runtime, in parts, so the phone number and email address never appear in the static HTML that crawlers index.
@@ -11,8 +10,11 @@ document.documentElement.classList.add("js");
   const msg = "היי, ראיתי את האתר שלך ואשמח לדבר על פרויקט";
   const waHref =
     "https://wa.me/" + cc + p1 + p2 + p3 + "?text=" + encodeURIComponent(msg);
+  // New tab keeps the page alive, so the GA4 click event queued below can still be sent once the delayed gtag.js finishes loading.
   document.querySelectorAll(".wa-link").forEach((a) => {
     a.href = waHref;
+    a.target = "_blank";
+    a.rel = "noopener";
   });
 
   const user = "shay" + ".onestopshop";
@@ -21,22 +23,21 @@ document.documentElement.classList.add("js");
     a.href = "mailto:" + user + "@" + domain;
   });
 
-  // Add contact details to the JSON-LD so crawlers that render JS (Google) see them, while keeping them out of the static HTML.
-  const ld = document.querySelector('script[type="application/ld+json"]');
-  if (ld) {
-    try {
-      const data = JSON.parse(ld.textContent);
-      // Only the business schema carries contact details - the guide
-      // page's Article schema has no telephone/email properties.
-      if (data["@type"] === "ProfessionalService") {
-        data.telephone = "+" + cc + p1 + p2 + p3;
-        data.email = user + "@" + domain;
-        ld.textContent = JSON.stringify(data);
+  // Add contact details to the JSON-LD so crawlers that render JS (Google) see them, while keeping them out of the static HTML. Pages can carry several JSON-LD blocks (Article, FAQPage, ...) in any order - only the business schema gets the contact details.
+  document
+    .querySelectorAll('script[type="application/ld+json"]')
+    .forEach((ld) => {
+      try {
+        const data = JSON.parse(ld.textContent);
+        if (data["@type"] === "ProfessionalService") {
+          data.telephone = "+" + cc + p1 + p2 + p3;
+          data.email = user + "@" + domain;
+          ld.textContent = JSON.stringify(data);
+        }
+      } catch {
+        // Malformed JSON-LD - leave it untouched.
       }
-    } catch {
-      // Malformed JSON-LD - leave it untouched.
-    }
-  }
+    });
 })();
 
 // GA4: report contact clicks (no-op when analytics is blocked or absent).
