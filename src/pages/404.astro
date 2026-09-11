@@ -1,0 +1,42 @@
+---
+import Base from "../layouts/Base.astro";
+import ArticleCta from "../components/ArticleCta.astro";
+---
+
+<Base
+  title={"העמוד לא נמצא | One Stop Shop"}
+  description={"העמוד שחיפשתם לא קיים או שהכתובת השתנתה. חזרו לעמוד הראשי או המשיכו לאחד המדריכים שלנו."}
+  path="/404/"
+  ogType="website"
+  ogTitle={"העמוד לא נמצא"}
+  ogDescription={"העמוד שחיפשתם לא קיים או שהכתובת השתנתה."}
+>
+    <main class="article" id="main-content">
+      <div class="container">
+        <article>
+          <h1>404 - העמוד לא נמצא</h1>
+
+          <p>
+            העמוד שחיפשתם לא קיים, הוסר, או שהכתובת השתנתה. זה קורה - והדרך
+            חזרה קצרה.
+          </p>
+
+          <p>לאן ממשיכים מכאן:</p>
+
+          <ul>
+            <li><a href="/">העמוד הראשי</a> - מי אנחנו ומה אנחנו בונים</li>
+            <li>
+              <a href="/guides/">המדריכים שלנו</a> - כל מה שכתבנו על אתרים,
+              אוטומציה ומערכות לעסקים
+            </li>
+            <li>
+              <a href="/website-packages/">חבילות בניית אתרים</a> - מה כלול
+              וכמה זה עולה
+            </li>
+          </ul>
+        </article>
+      </div>
+    </main>
+
+    <ArticleCta title="לא מצאתם את מה שחיפשתם?" />
+</Base>
