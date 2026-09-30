@@ -1,22 +1,21 @@
 ---
 // variant "home": index page - anchor links into the one-pager.
-// variant "packages": packages page - marks itself with aria-current.
-// variant "article": every other inner page.
+// Everywhere else the section links point back into "/".
+// The current page is derived from the URL, so no page has to declare it.
 interface Props {
   variant: "home" | "article" | "packages";
 }
 const { variant } = Astro.props;
 
-// On the one-pager, section links are bare anchors; everywhere else they
-// point back into "/". Only the first two hrefs differ between variants.
 const home = variant === "home";
+const here = Astro.url.pathname.replace(/\/?$/, "/");
 const links = [
   { href: home ? "#hero" : "/", label: "ראשי" },
   { href: home ? "#projects" : "/#projects", label: "פרויקטים" },
-  { href: "/website-packages/", label: "חבילות", current: variant === "packages" },
+  { href: "/website-packages/", label: "חבילות ומחירים" },
   { href: "/guides/", label: "מדריכים" },
   { href: home ? "#contact" : "/#contact", label: "יצירת קשר" },
-];
+].map((l) => ({ ...l, current: l.href === here }));
 ---
 
 <nav class="topnav" aria-label="ניווט ראשי">
@@ -35,5 +34,24 @@ const links = [
         ))
       }
     </ul>
+    <details class="nav-menu">
+      <summary>
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+        <span class="visually-hidden">תפריט</span>
+      </summary>
+      <ul>
+        {
+          links.map(({ href, label, current }) => (
+            <li>
+              <a href={href} aria-current={current ? "page" : undefined}>
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </details>
   </div>
 </nav>

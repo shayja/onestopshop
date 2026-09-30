@@ -1,42 +1,62 @@
 ---
-// variant "home": brand is plain text (the page IS home).
-// variant "packages": adds the packages link between brand and guides.
-// variant "article": brand links home, then guides.
+// variant "home": brand is plain text (the page IS home); elsewhere it links home.
+// Icons come from the SVG sprite in Base.astro.
 interface Props {
   variant: "home" | "article" | "packages";
 }
 const { variant } = Astro.props;
+
+const here = Astro.url.pathname.replace(/\/?$/, "/");
+const links = [
+  { href: "/website-packages/", label: "חבילות ומחירים" },
+  { href: "/guides/", label: "כל המדריכים" },
+  { href: "/website-cost/", label: "כמה עולה אתר" },
+  { href: "/website-timeline/", label: "כמה זמן לוקח" },
+  { href: "/automation-guide/", label: "אוטומציה לעסקים" },
+];
 ---
 
 <footer>
-  <div class="container">
-    <p>
-      {variant === "home" ? "One Stop Shop" : <a href="/">One Stop Shop</a>}
-      <span class="sep" aria-hidden="true">·</span>
+  <div class="container footer-inner">
+    <p class="footer-brand" dir="ltr">
+      {variant === "home" ? "One Stop Shop" : <a href="/">One Stop Shop</a>}<span
+        class="accent-dot"
+        aria-hidden="true">.</span
+      >
+    </p>
+    <ul class="footer-links">
       {
-        variant === "packages" && (
-          <>
-            <a href="/website-packages/">חבילות</a>
-            <span class="sep" aria-hidden="true">·</span>
-          </>
-        )
+        links.map(({ href, label }) => (
+          <li>
+            <a href={href} aria-current={href === here ? "page" : undefined}>
+              {label}
+            </a>
+          </li>
+        ))
       }
-      <a href="/guides/">מדריכים</a>
-      <span class="sep" aria-hidden="true">·</span>
-      <span class="social-links">
+    </ul>
+    <ul class="social-links">
+      <li>
         <a
-          class="social-icon si-facebook"
+          class="social-icon"
           href="https://www.facebook.com/onestopshop.co.il"
           target="_blank"
           rel="noopener"
-          aria-label="פייסבוק"></a>
-        <a
-          class="social-icon si-whatsapp wa-link"
-          href="#"
-          aria-label="וואטסאפ"></a>
-        <a class="social-icon si-email email-link" href="#" aria-label="אימייל"
-        ></a>
-      </span>
-    </p>
+          aria-label="פייסבוק"
+        >
+          <svg aria-hidden="true" focusable="false"><use href="#icon-facebook"></use></svg>
+        </a>
+      </li>
+      <li>
+        <a class="social-icon wa-link" href="#" aria-label="וואטסאפ">
+          <svg aria-hidden="true" focusable="false"><use href="#icon-whatsapp"></use></svg>
+        </a>
+      </li>
+      <li>
+        <a class="social-icon email-link" href="#" aria-label="אימייל">
+          <svg aria-hidden="true" focusable="false"><use href="#icon-mail"></use></svg>
+        </a>
+      </li>
+    </ul>
   </div>
 </footer>

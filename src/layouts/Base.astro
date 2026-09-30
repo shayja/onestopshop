@@ -2,6 +2,7 @@
 import "../styles.css";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+import { enhanceArticle } from "../lib/article";
 
 interface Props {
   title: string;
@@ -26,7 +27,7 @@ const {
   ogDescription,
   ogImageAlt = "One Stop Shop - בניית אתרים, אפליקציות ואוטומציה לעסקים",
   variant = "article",
-  waFloat = false,
+  waFloat = true,
   datePublished,
   dateModified,
 } = Astro.props;
@@ -62,6 +63,13 @@ const articleSchema = datePublished
       },
     })
   : null;
+
+// Guide pages (the ones with a datePublished) get the meta line, heading ids
+// and table of contents injected at build time - see src/lib/article.ts.
+const content = await Astro.slots.render("default");
+const body = datePublished
+  ? enhanceArticle(content, { path, datePublished, dateModified })
+  : content;
 ---
 
 <!doctype html>
@@ -141,10 +149,22 @@ const articleSchema = datePublished
           d="M12 2a10 10 0 0 0-8.65 15L2 22l5.15-1.33A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.06.79.82-2.98-.2-.31A8.2 8.2 0 1 1 12 20.2Zm4.5-6.13c-.25-.12-1.46-.72-1.68-.8-.23-.09-.39-.13-.56.12-.16.25-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.22-1.45-1.37-1.7-.14-.24-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.48c-.16 0-.43.06-.66.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.13.16 1.74 2.65 4.2 3.72.59.25 1.05.4 1.4.52.59.19 1.13.16 1.56.1.47-.07 1.46-.6 1.66-1.17.21-.58.21-1.07.15-1.17-.06-.1-.23-.17-.47-.29Z"
         />
       </symbol>
+      <symbol id="icon-mail" viewBox="0 0 24 24">
+        <path
+          fill="currentColor"
+          d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5-8-5V6l8 5 8-5v2Z"
+        />
+      </symbol>
+      <symbol id="icon-facebook" viewBox="0 0 24 24">
+        <path
+          fill="currentColor"
+          d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14A28 28 0 0 0 14.64 2C11.93 2 10 3.66 10 6.7v2.8H7v4h3V22h4v-8.5Z"
+        />
+      </symbol>
     </svg>
     <Nav variant={variant} />
 
-    <slot />
+    <Fragment set:html={body} />
 
     <Footer variant={variant} />
 

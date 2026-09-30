@@ -1,151 +1,37 @@
 ---
 import Base from "../layouts/Base.astro";
 import ArticleCta from "../components/ArticleCta.astro";
-const ld0 = String.raw`{
-        "@context": "https://schema.org",
-        "@type": "CollectionPage",
-        "name": "מדריכים לבעלי עסקים",
-        "url": "https://onestopshop.co.il/guides/",
-        "inLanguage": "he",
-        "author": {
-          "@type": "Organization",
-          "name": "One Stop Shop",
-          "url": "https://onestopshop.co.il/"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "One Stop Shop",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://onestopshop.co.il/favicon-512.png"
-          }
-        },
-        "mainEntity": {
-          "@type": "ItemList",
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "מה חשוב כשבונים אתר אינטרנט לעסק",
-              "url": "https://onestopshop.co.il/guide/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "כמה זמן לוקח לבנות אתר לעסק",
-              "url": "https://onestopshop.co.il/website-timeline/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 3,
-              "name": "כמה עולה בניית אתר לעסק",
-              "url": "https://onestopshop.co.il/website-cost/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 4,
-              "name": "דף נחיתה או אתר תדמית",
-              "url": "https://onestopshop.co.il/landing-page-or-website/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 5,
-              "name": "אפליקציה לעסק",
-              "url": "https://onestopshop.co.il/business-app/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 6,
-              "name": "אוטומציה לעסקים קטנים",
-              "url": "https://onestopshop.co.il/automation-guide/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 7,
-              "name": "בוט וואטסאפ לעסק",
-              "url": "https://onestopshop.co.il/whatsapp-bot/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 8,
-              "name": "פרופיל עסקי בגוגל",
-              "url": "https://onestopshop.co.il/google-business-profile/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 9,
-              "name": "תחזוקת אתר לעסק",
-              "url": "https://onestopshop.co.il/website-maintenance/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 10,
-              "name": "שילוב AI באתר העסק",
-              "url": "https://onestopshop.co.il/ai-website/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 11,
-              "name": "AI בעבודה היומיומית של עסק קטן",
-              "url": "https://onestopshop.co.il/ai-for-business/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 12,
-              "name": "אינטגרציית סליקה ישראלית",
-              "url": "https://onestopshop.co.il/israeli-payment-integration/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 13,
-              "name": "אינטגרציית Shopify (שופיפיי)",
-              "url": "https://onestopshop.co.il/shopify-integration/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 14,
-              "name": "דשבורד ניהולי לעסק",
-              "url": "https://onestopshop.co.il/business-dashboard/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 15,
-              "name": "תוכנה בהתאמה אישית לעסק",
-              "url": "https://onestopshop.co.il/custom-business-software/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 16,
-              "name": "אחסון אתרים ושרתים",
-              "url": "https://onestopshop.co.il/website-hosting/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 17,
-              "name": "נגישות אתרים (תקן 5568)",
-              "url": "https://onestopshop.co.il/website-accessibility/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 18,
-              "name": "אבטחת אתרים והגנה על מידע",
-              "url": "https://onestopshop.co.il/website-security/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 19,
-              "name": "אוטומציה של חשבוניות וקבלות",
-              "url": "https://onestopshop.co.il/invoice-automation/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 20,
-              "name": "פתרון מותאם אישית או פלטפורמה מוכנה",
-              "url": "https://onestopshop.co.il/custom-vs-generic/"
-            }
-          ]
-        }
-      }`;
+import { categories, allGuides } from "../data/guides";
+
+const ld0 = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "מדריכים לבעלי עסקים",
+  url: "https://onestopshop.co.il/guides/",
+  inLanguage: "he",
+  author: {
+    "@type": "Organization",
+    name: "One Stop Shop",
+    url: "https://onestopshop.co.il/",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "One Stop Shop",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://onestopshop.co.il/favicon-512.png",
+    },
+  },
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: allGuides.map((g, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: g.name,
+      url: `https://onestopshop.co.il${g.href}`,
+    })),
+  },
+});
 ---
 
 <Base
@@ -171,190 +57,39 @@ const ld0 = String.raw`{
           תשובה ישרה: מה כדאי, כמה זה עולה, ומתי עדיף לוותר.
         </p>
 
-        <ul class="guides-list">
-          <li>
-            <a href="/guide/">
-              <h2>מה חשוב כשבונים אתר - המדריך המלא</h2>
-              <p>
-                כל ההחלטות בדרך לאתר שעובד: מטרות, קהל, עיצוב, נייד, מהירות,
-                קידום בגוגל, אבטחה, תחזוקה ובחירת ספק.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/website-timeline/">
-              <h2>כמה זמן לוקח לבנות אתר</h2>
-              <p>
-                לוח זמנים ריאלי לפי סוג האתר, פירוק שלבי הפרויקט, ולמה פרויקטים
-                באמת נתקעים - ואיך מקצרים את הדרך לאוויר.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/website-cost/">
-              <h2>כמה עולה בניית אתר לעסק</h2>
-              <p>
-                טווחי מחירים ריאליים לפי סוג האתר, מה באמת קובע את המחיר,
-                העלויות השוטפות שאחרי, ואיך משווים הצעות מחיר נכון.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/landing-page-or-website/">
-              <h2>דף נחיתה או אתר תדמית</h2>
-              <p>
-                שני כלים לשתי עבודות שונות: מתי מספיק דף נחיתה, מתי חייבים אתר,
-                ואיך מתחילים קטן בלי לבנות פעמיים.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/business-app/">
-              <h2>אפליקציה לעסק</h2>
-              <p>
-                מתי באמת שווה לפתח אפליקציה, כמה היא עולה כולל התחזוקה, והחלופות
-                שנותנות את רוב הערך בשבריר מהמחיר.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/automation-guide/">
-              <h2>אוטומציה לעסקים קטנים</h2>
-              <p>
-                אילו משימות כדאי להפוך לאוטומטיות, מה בינה מלאכותית משנה,
-                הטעויות שעולות ביוקר וממה מתחילים בפועל.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/whatsapp-bot/">
-              <h2>בוט וואטסאפ לעסק</h2>
-              <p>
-                ההבדל בין מענה אוטומטי לבוט חכם, למי זה מתאים, כמה זה עולה, ושני
-                כללי הברזל להטמעה שלקוחות אוהבים.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/google-business-profile/">
-              <h2>פרופיל עסקי בגוגל</h2>
-              <p>
-                איך מקימים את הכרטיס העסקי בגוגל בחינם, מופיעים בחיפושים מקומיים
-                ובמפות, ואוספים ביקורות בלי להתחנן.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/website-maintenance/">
-              <h2>תחזוקת אתר לעסק</h2>
-              <p>
-                מה קורה לאתרים מוזנחים, מה כוללת תחזוקה סבירה, מה אפשר לעשות לבד
-                ומתי נכון ליווי חודשי - וכמה זה עולה.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/ai-website/">
-              <h2>שילוב AI באתר העסק</h2>
-              <p>
-                מה באמת עובד ומה גימיק - צ'אט, טפסים חכמים, תוכן - ואיך גורמים
-                למנועי ה-AI להמליץ על העסק שלכם.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/ai-for-business/">
-              <h2>AI בעבודה היומיומית של עסק קטן</h2>
-              <p>
-                ניסוח הודעות, הצעות מחיר, תוכן וסיכומים - כללי העבודה שמוציאים
-                תוצאות טובות, הגבולות, ומתי עוברים לאוטומציה.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/israeli-payment-integration/">
-              <h2>אינטגרציית סליקה ישראלית</h2>
-              <p>
-                חיבור אתר או חנות לספקי הסליקה הישראליים - למה זה שונה מסליקה
-                גלובלית, איך תשלום באתר באמת עובד, מה כולל התהליך וכמה זה
-                עולה.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/shopify-integration/">
-              <h2>אינטגרציית Shopify (שופיפיי)</h2>
-              <p>
-                מתי חנות Shopify צריכה לדבר עם מערכת נוספת - מלאי, CRM או
-                אפליקציה - ומה כולל תהליך האינטגרציה דרך ה-API.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/business-dashboard/">
-              <h2>דשבורד ניהולי לעסק</h2>
-              <p>
-                מסך אחד שמרכז הזמנות, פניות והכנסות מכל המערכות - מתי דשבורד
-                באמת חוסך זמן, מה כולל תהליך הבנייה, וממה מתחילים.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/custom-business-software/">
-              <h2>תוכנה בהתאמה אישית לעסק</h2>
-              <p>
-                מתי כלי מדף כבר לא מספיק ומתי פיתוח מותאם באמת משתלם - הסימנים
-                המובהקים, מה כולל התהליך, ולמה מתחילים מגרסה מינימלית.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/website-hosting/">
-              <h2>אחסון אתרים ושרתים</h2>
-              <p>
-                איפה כדאי לארח את האתר של העסק - ההבדל בין אחסון שיתופי, VPS
-                וענן, מה באמת משנה (מיקום, CDN, גיבויים, SSL), ולמה הזול עולה
-                ביוקר.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/website-accessibility/">
-              <h2>נגישות אתרים (תקן 5568)</h2>
-              <p>
-                מה החוק דורש מבעל עסק - מי חייב ומי פטור, מה הסיכון המשפטי,
-                למה תוסף נגישות צף לא מספיק, ואיך מנגישים אתר בפועל.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/website-security/">
-              <h2>אבטחת אתרים והגנה על מידע</h2>
-              <p>
-                איך מגינים על האתר ועל פרטי הלקוחות - האיומים הנפוצים, שכבות
-                ההגנה בתשתית ובקוד, למה אסור לשמור אשראי בשרת, ומה החוק דורש.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/invoice-automation/">
-              <h2>אוטומציה של חשבוניות וקבלות</h2>
-              <p>
-                איך תשלום באתר הופך למסמך חתום שנשלח ללקוח בשניות - מה החוק
-                דורש, שלוש דרכי חיבור, ואיך מטפלים בזיכויים, תשלומים ומנויים.
-              </p>
-            </a>
-          </li>
-          <li>
-            <a href="/custom-vs-generic/">
-              <h2>פתרון מותאם אישית או פלטפורמה מוכנה</h2>
-              <p>
-                למה אתרים על תבניות נראים אותו דבר, מה עולות העקיפות שמצטברות,
-                מתי פלטפורמה מוכנה דווקא נכונה - ואיך מזהים את רגע המעבר.
-              </p>
-            </a>
-          </li>
+        <ul class="chip-row" aria-label="קטגוריות">
+          {
+            categories.map((c) => (
+              <li>
+                <a class="chip" href={`#${c.id}`}>
+                  {c.label}
+                  <span class="chip-count">
+                    <span class="visually-hidden">, </span>{c.guides.length}
+                    <span class="visually-hidden"> מדריכים</span>
+                  </span>
+                </a>
+              </li>
+            ))
+          }
         </ul>
+
+        {
+          categories.map((c) => (
+            <section class="guide-group" id={c.id} aria-labelledby={`${c.id}-title`}>
+              <h2 id={`${c.id}-title`}>{c.label}</h2>
+              <ul class="guides-list">
+                {c.guides.map((g) => (
+                  <li>
+                    <a href={g.href}>
+                      <h3>{g.title}</h3>
+                      <p>{g.desc}</p>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))
+        }
       </div>
     </main>
 
