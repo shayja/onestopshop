@@ -1,7 +1,7 @@
 /* ============================================================
    One Stop Shop · concept: "Ivory"
    White elegant theme: warm ivory ground, dark ink type,
-   amber accent, full-screen photo hero.
+   WhatsApp-green accent, full-screen photo hero.
    RTL-first, mobile-first.
    ============================================================ */
 
@@ -40,11 +40,87 @@
   --accent-dim: rgb(37 211 102 / 0.12);
   --ink-shadow: 29 26 21; /* shadow base color */
   --wa-green: #25d366;
+  --wa-green-hi: #2ee076; /* top of the button gradient */
+  --wa-green-hover-hi: #3aeb81;
+  --wa-green-hover: #2ada6d;
   --wa-green-dark: #0d3320;
+  --wa-glow: 37 211 102; /* green shadow base */
+  --tint-green: #eef8f1;
+
+  /* device-frame chrome (decorative) */
+  --chrome-hi: #f7f4ee;
+  --chrome-lo: #eeeae1;
+  --dot-red: #e0645c;
+  --dot-amber: #e0b14e;
+  --dot-green: #6cc26c;
+  --device-silver: #c9c3b8;
+  --device-ink: #14120e;
+
+  /* spacing scale */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6rem;
+
+  /* radii */
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 18px;
+  --r-pill: 999px;
+
+  /* elevation */
+  --shadow-1: 0 4px 14px rgb(var(--ink-shadow) / 0.05);
+  --shadow-2: 0 10px 30px rgb(var(--ink-shadow) / 0.08);
+  --shadow-hover: 0 14px 32px rgb(var(--ink-shadow) / 0.12);
+  --shadow-3:
+    0 24px 50px rgb(var(--ink-shadow) / 0.16),
+    0 4px 14px rgb(var(--ink-shadow) / 0.08);
+  --shadow-3-hover:
+    0 30px 64px rgb(var(--ink-shadow) / 0.2),
+    0 6px 18px rgb(var(--ink-shadow) / 0.1);
+
+  /* type scale */
+  --fs-sm: 0.9rem;
+  --fs-base: 1.0625rem;
+  --fs-lg: 1.25rem;
+  --fs-h3: clamp(1.15rem, 4vw, 1.35rem);
+  --fs-h2: clamp(2rem, 6vw, 3rem);
+
+  /* motion */
+  --dur-fast: 130ms;
+  --dur-med: 220ms;
+  --dur-slow: 600ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 * {
   box-sizing: border-box;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Stroke icons (inline SVG, currentColor) */
+.icon {
+  width: 1.25em;
+  height: 1.25em;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .skip-link {
@@ -82,7 +158,7 @@ body {
   color: var(--text);
   font-family: "Heebo", "Segoe UI", Arial, sans-serif;
   line-height: 1.8;
-  font-size: 1.0625rem;
+  font-size: var(--fs-base);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -117,13 +193,14 @@ a {
   gap: 0.6rem;
   font-weight: 700;
   text-decoration: none;
-  border-radius: 999px;
+  border-radius: var(--r-pill);
+  touch-action: manipulation;
   transition:
-    transform 130ms ease,
-    background-color 130ms ease,
-    box-shadow 130ms ease,
-    color 130ms ease,
-    border-color 130ms ease;
+    transform var(--dur-fast) ease,
+    background-color var(--dur-fast) ease,
+    box-shadow var(--dur-fast) ease,
+    color var(--dur-fast) ease,
+    border-color var(--dur-fast) ease;
 }
 
 .btn:active {
@@ -131,27 +208,49 @@ a {
 }
 
 .btn-whatsapp {
-  background: linear-gradient(180deg, #2ee076, var(--wa-green));
+  background: linear-gradient(180deg, var(--wa-green-hi), var(--wa-green));
   color: var(--wa-green-dark);
   font-size: 1.15rem;
   padding: 1rem 2.25rem;
   min-height: 48px;
   box-shadow:
-    0 10px 28px rgb(37 211 102 / 0.35),
+    0 10px 28px rgb(var(--wa-glow) / 0.35),
     inset 0 1px 0 rgb(255 255 255 / 0.4);
 }
 
 .btn-whatsapp:hover {
-  background: linear-gradient(180deg, #3aeb81, #2ada6d);
+  background: linear-gradient(
+    180deg,
+    var(--wa-green-hover-hi),
+    var(--wa-green-hover)
+  );
   box-shadow:
-    0 14px 36px rgb(37 211 102 / 0.45),
+    0 14px 36px rgb(var(--wa-glow) / 0.45),
     inset 0 1px 0 rgb(255 255 255 / 0.4);
+}
+
+/* Secondary to the WhatsApp button: same height, quiet surface */
+.btn-ghost {
+  font-size: 1.05rem;
+  padding: 0.95rem 1.9rem;
+  min-height: 48px;
+  color: var(--text);
+  background: rgb(255 255 255 / 0.7);
+  border: 1px solid var(--border-light);
+}
+
+.btn-ghost:hover {
+  background: var(--surface);
+  border-color: var(--accent-deep);
+  color: var(--accent-deep);
+  box-shadow: var(--shadow-2);
 }
 
 .btn-link {
   color: var(--accent-deep);
   font-size: 0.98rem;
   padding: 0.55rem 1.4rem;
+  min-height: 44px;
   border: 1px solid rgb(13 51 32 / 0.4);
   background: transparent;
 }
@@ -160,7 +259,7 @@ a {
   background: var(--accent);
   border-color: var(--accent);
   color: var(--wa-green-dark);
-  box-shadow: 0 6px 20px rgb(37 211 102 / 0.4);
+  box-shadow: 0 6px 20px rgb(var(--wa-glow) / 0.4);
 }
 
 .icon-wa {
@@ -212,41 +311,93 @@ a {
 }
 
 .nav-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--text);
   text-decoration: none;
   font-weight: 500;
   font-size: 0.95rem;
   white-space: nowrap;
-  transition: color 130ms ease;
+  transition: color var(--dur-fast) ease;
 }
 
 .nav-links a:hover {
   color: var(--accent-deep);
 }
 
-@media (max-width: 479px) {
-  .brand {
-    font-size: 1rem;
-  }
-  .nav-links {
-    gap: 0.9rem;
-  }
-  .nav-links a {
-    font-size: 0.88rem;
-  }
-  /* the brand already links home - drop the redundant "ראשי"
-     so the four remaining items keep to one tidy row */
-  .nav-links li:first-child {
-    display: none;
-  }
+.nav-links a[aria-current="page"],
+.nav-menu a[aria-current="page"] {
+  color: var(--accent-deep);
+  font-weight: 800;
 }
 
-@media (max-width: 359px) {
+/* Small screens: the full link list moves into a disclosure menu, so no
+   destination is hidden and every row is a full-size tap target */
+.nav-menu {
+  display: none;
+}
+
+@media (max-width: 719px) {
   .nav-links {
-    gap: 0.7rem;
+    display: none;
   }
-  .nav-links a {
-    font-size: 0.82rem;
+
+  .nav-menu {
+    display: block;
+  }
+
+  .nav-menu summary {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin-inline-end: -0.6rem;
+    border-radius: var(--r-sm);
+    color: var(--text);
+    cursor: pointer;
+    list-style: none;
+    touch-action: manipulation;
+  }
+
+  .nav-menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .nav-menu summary .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: transform var(--dur-med) var(--ease-out);
+  }
+
+  .nav-menu[open] summary {
+    background: var(--surface-2);
+  }
+
+  .nav-menu ul {
+    position: absolute;
+    top: 100%;
+    inset-inline: 0;
+    margin: 0;
+    padding: var(--space-1) clamp(1.5rem, 4vw, 3rem) var(--space-2);
+    list-style: none;
+    background: var(--bg);
+    border-block-end: 1px solid var(--border);
+    box-shadow: var(--shadow-2);
+  }
+
+  .nav-menu li + li {
+    border-block-start: 1px solid var(--border);
+  }
+
+  .nav-menu a {
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
   }
 }
 
@@ -330,15 +481,31 @@ a {
     );
 }
 
-/* Hero typography */
+/* Hero typography: brand as a kicker, the value proposition is the h1 */
+.hero-brand {
+  margin: 0 0 var(--space-2);
+  font-size: clamp(1.1rem, 3vw, 1.35rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-align: end; /* LTR run: end = the RTL start side */
+}
+
+/* the nav already carries the brand on small screens */
+@media (max-width: 719px) {
+  .hero-brand {
+    display: none;
+  }
+}
+
 .hero h1 {
   font-family: "Heebo", sans-serif;
-  font-size: clamp(3rem, 11vw, 5.75rem);
+  font-size: clamp(2.3rem, 7.5vw, 4.25rem);
   font-weight: 900;
-  line-height: 1.02;
+  line-height: 1.08;
   letter-spacing: -0.02em;
-  margin: 0 0 1.5rem;
-  text-align: end; /* hug the RTL text side, clear of the photo */
+  margin: 0 0 var(--space-3);
+  max-width: 15ch;
+  text-wrap: balance;
 }
 
 .accent-dot {
@@ -349,9 +516,39 @@ a {
   font-size: clamp(1.25rem, 4.6vw, 1.6rem);
   font-weight: 500;
   line-height: 1.55;
-  margin: 0 0 2.5rem;
+  margin: 0 0 var(--space-4);
   max-width: 34rem;
   text-wrap: balance;
+}
+
+.hero .hero-ctas {
+  justify-content: flex-start;
+}
+
+.hero-trust {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+}
+
+.hero-trust li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hero-trust li::before {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="%230d3320" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>')
+    center / contain no-repeat;
 }
 
 /* ============================================================
@@ -366,30 +563,42 @@ a {
   max-width: 64rem;
 }
 
-/* Shared section-title: big ink headline with a fading rule.
-   Used by the projects, included and contact sections */
-.projects h2,
-.included h2,
-.final-cta h2 {
-  font-family: "Heebo", sans-serif;
-  font-size: clamp(2.2rem, 7vw, 3.2rem);
-  font-weight: 900;
-  line-height: 1.1;
-  margin: 0 0 1rem;
-  display: flex;
-  align-items: baseline;
-  gap: 1.5rem;
-  text-align: start;
+/* room for the first project's outlined number under the title */
+.projects .section-title {
+  margin-block-end: var(--space-5);
 }
 
-.projects h2::after,
-.included h2::after,
-.final-cta h2::after {
+/* Shared section title: one size and weight for every page section.
+   .ruled adds the fading rule after short, single-line titles. */
+.section-title,
+.section-header.compact h2,
+.faq h2 {
+  font-family: "Heebo", sans-serif;
+  font-size: var(--fs-h2);
+  font-weight: 900;
+  line-height: 1.15;
+  margin: 0 0 var(--space-2);
+  text-align: start;
+  text-wrap: balance;
+}
+
+.section-title.ruled {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.section-title.ruled::after {
   content: "";
   flex: 1;
+  min-width: 2rem;
   height: 1px;
   align-self: center;
   background: linear-gradient(to left, var(--border-light), transparent);
+}
+
+.section-more {
+  margin-block-start: var(--space-4);
 }
 
 .section-intro {
@@ -399,7 +608,7 @@ a {
 
 .project {
   position: relative;
-  margin-block-end: 7rem;
+  margin-block-end: 5.5rem;
 }
 
 .project:last-child {
@@ -409,7 +618,7 @@ a {
 /* Giant outlined index number behind each project */
 .proj-num {
   position: absolute;
-  top: -4.5rem;
+  top: -3.75rem;
   inset-inline-end: -0.5rem;
   z-index: 0;
   margin: 0;
@@ -431,6 +640,25 @@ a {
   margin: 2rem 0 0.75rem;
 }
 
+.tags {
+  list-style: none;
+  margin: 0 0 var(--space-2);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tags li {
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.5;
+  padding: 0.15rem 0.7rem;
+  border-radius: var(--r-pill);
+  background: var(--accent-dim);
+  color: var(--accent-deep);
+}
+
 .project .client {
   color: var(--muted);
   font-weight: 400;
@@ -450,26 +678,29 @@ a {
 
 /* --- Device frames, light chrome --- */
 
+/* The frame links to the live project (a mouse shortcut; keyboard and
+   screen-reader users get the labelled button below it) */
 .frame {
+  display: block;
   position: relative;
   z-index: 1;
   background: var(--surface);
   border: 1px solid var(--border-light);
   overflow: hidden;
-  box-shadow:
-    0 24px 50px rgb(var(--ink-shadow) / 0.16),
-    0 4px 14px rgb(var(--ink-shadow) / 0.08);
-  transition: box-shadow 250ms ease;
+  text-decoration: none;
+  box-shadow: var(--shadow-3);
+  transition:
+    box-shadow var(--dur-med) ease,
+    transform var(--dur-med) var(--ease-out);
 }
 
-.project:hover .frame {
-  box-shadow:
-    0 30px 64px rgb(var(--ink-shadow) / 0.2),
-    0 6px 18px rgb(var(--ink-shadow) / 0.1);
+a.frame:hover {
+  box-shadow: var(--shadow-3-hover);
+  transform: translateY(-3px);
 }
 
 .frame-browser {
-  border-radius: 14px;
+  border-radius: var(--r-md);
 }
 
 .frame-bar {
@@ -477,7 +708,7 @@ a {
   align-items: center;
   gap: 6px;
   padding: 9px 14px;
-  background: linear-gradient(180deg, #f7f4ee, #eeeae1);
+  background: linear-gradient(180deg, var(--chrome-hi), var(--chrome-lo));
   border-block-end: 1px solid var(--border);
 }
 
@@ -489,24 +720,24 @@ a {
 }
 
 .frame-bar .fd:nth-child(1) {
-  background: #e0645c;
+  background: var(--dot-red);
 }
 .frame-bar .fd:nth-child(2) {
-  background: #e0b14e;
+  background: var(--dot-amber);
 }
 .frame-bar .fd:nth-child(3) {
-  background: #6cc26c;
+  background: var(--dot-green);
 }
 
 .frame-url {
   margin-inline: auto;
   direction: ltr;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   letter-spacing: 0.03em;
   color: var(--muted);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--r-pill);
   padding: 0.1rem 1.2rem;
   line-height: 1.5;
 }
@@ -516,9 +747,9 @@ a {
   width: min(240px, 64%);
   margin-inline: auto;
   border-radius: 44px;
-  border: 3px solid #c9c3b8;
+  border: 3px solid var(--device-silver);
   outline: 1px solid rgb(var(--ink-shadow) / 0.12);
-  background: #fff;
+  background: var(--surface);
   position: relative;
 }
 
@@ -530,28 +761,30 @@ a {
   transform: translateX(50%);
   width: 25%;
   height: 20px;
-  border-radius: 999px;
-  background: #14120e;
+  border-radius: var(--r-pill);
+  background: var(--device-ink);
   z-index: 1;
 }
 
 /* Desktop: screenshot beside text, alternating sides */
 @media (min-width: 900px) {
+  /* text block (h3, tags, copy, button) centred beside the frame via
+     the two flexible rows around it */
   .project {
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
-    grid-template-rows: auto auto auto 1fr;
+    grid-template-rows: 1fr auto auto auto auto 1fr;
     column-gap: 4rem;
-    align-items: center;
   }
 
   .project .frame {
     grid-column: 1;
-    grid-row: 1 / span 4;
+    grid-row: 1 / -1;
     align-self: center;
   }
 
   .project h3,
+  .project .tags,
   .project > p:not(.proj-num),
   .project .btn-link {
     grid-column: 2;
@@ -559,25 +792,39 @@ a {
   }
 
   .project h3 {
-    align-self: end;
+    grid-row: 2;
     margin-block-start: 0;
   }
+  .project .tags {
+    grid-row: 3;
+  }
+  .project > p:not(.proj-num) {
+    grid-row: 4;
+  }
   .project .btn-link {
-    align-self: start;
+    grid-row: 5;
   }
 
   .project:nth-of-type(even) .frame {
     grid-column: 2;
   }
   .project:nth-of-type(even) h3,
+  .project:nth-of-type(even) .tags,
   .project:nth-of-type(even) > p:not(.proj-num),
   .project:nth-of-type(even) .btn-link {
     grid-column: 1;
   }
 
+  /* numbers sit fully above the text column so taller copy (tags)
+     never runs into them */
+  .project {
+    margin-block-end: 8rem;
+  }
+
   .proj-num {
-    top: -3.5rem;
+    top: -6.25rem;
     inset-inline-end: 0;
+    font-size: 7rem;
   }
 
   .project:nth-of-type(even) .proj-num {
@@ -634,13 +881,6 @@ a {
   pointer-events: none;
 }
 
-.automation h2 {
-  font-family: "Heebo", sans-serif;
-  font-size: clamp(1.7rem, 5.5vw, 2.3rem);
-  font-weight: 900;
-  margin: 0 0 1rem;
-}
-
 /* --- Automation workflow cards --- */
 
 .automation .container {
@@ -653,8 +893,6 @@ a {
 
 .automation .section-header h2 {
   margin: 0 0 0.75rem;
-  line-height: 1.2;
-  text-wrap: balance; /* if it must wrap (mobile), split into even lines */
 }
 
 .automation .section-header .section-intro {
@@ -680,17 +918,25 @@ a {
   flex-direction: column;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: var(--r-lg);
   padding: 1.5rem 1.35rem 1.6rem;
-  box-shadow: 0 4px 14px rgb(var(--ink-shadow) / 0.05);
-  transition:
-    transform 250ms ease,
-    box-shadow 250ms ease;
+  box-shadow: var(--shadow-1);
 }
 
-.flow-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 40px rgb(var(--ink-shadow) / 0.12);
+.flow-icon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  margin: 0 auto var(--space-2);
+  border-radius: 50%;
+  background: var(--accent-dim);
+  color: var(--accent-deep);
+}
+
+.flow-icon .icon {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .flow-card h3 {
@@ -720,7 +966,7 @@ a {
   padding: 0.6rem 0.9rem;
   background: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--r-sm);
 }
 
 /* Connector arrow drawn between steps, invisible to screen readers */
@@ -791,7 +1037,7 @@ a {
   color: var(--accent-deep);
   border: 1px solid rgb(13 51 32 / 0.35);
   background: var(--accent-dim);
-  border-radius: 999px;
+  border-radius: var(--r-pill);
   padding: 0.18rem 0.65rem;
 }
 
@@ -814,6 +1060,124 @@ a {
     justify-content: center;
     gap: 1.2rem;
   }
+}
+
+/* ============================================================
+   Pricing teaser (home) - four package cards linking into the
+   packages page
+   ============================================================ */
+
+.pricing {
+  padding-block: var(--space-6) var(--space-5);
+}
+
+.pricing .container {
+  max-width: 64rem;
+}
+
+.pricing .section-intro {
+  margin-block-end: var(--space-4);
+}
+
+.price-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+@media (min-width: 640px) {
+  .price-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1000px) {
+  .price-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.price-grid a {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.4rem 1.3rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-1);
+  color: var(--text);
+  text-decoration: none;
+  transition:
+    transform var(--dur-med) var(--ease-out),
+    box-shadow var(--dur-med) ease,
+    border-color var(--dur-med) ease;
+}
+
+.price-grid a:hover {
+  transform: translateY(-3px);
+  border-color: rgb(13 51 32 / 0.35);
+  box-shadow: var(--shadow-hover);
+}
+
+.price-grid .featured a {
+  border-color: var(--accent-deep);
+}
+
+.price-grid h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.35;
+  margin: 0 0 0.6rem;
+}
+
+.price-grid p {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+}
+
+.price-grid .price {
+  margin-block-end: 0.4rem;
+}
+
+.price-grid .price-from {
+  display: block;
+  font-size: 0.8rem;
+}
+
+.price-grid .vat {
+  white-space: nowrap;
+}
+
+.price-grid .price strong,
+.package-price strong {
+  font-variant-numeric: tabular-nums;
+}
+
+.price-grid .price strong {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--accent-deep);
+}
+
+.package-badge {
+  position: absolute;
+  top: 0;
+  inset-inline-end: 1.1rem;
+  transform: translateY(-50%);
+  margin: 0;
+  padding: 0.1rem 0.75rem;
+  border-radius: var(--r-pill);
+  background: var(--accent-deep);
+  color: var(--bg);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.6;
 }
 
 /* ============================================================
@@ -855,9 +1219,9 @@ a {
   position: relative;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: var(--r-md);
   padding: 1.15rem 3.1rem 1.15rem 1.25rem; /* start pad clears the check */
-  box-shadow: 0 4px 14px rgb(var(--ink-shadow) / 0.05);
+  box-shadow: var(--shadow-1);
 }
 
 /* Green check in the start (right in RTL) corner */
@@ -895,7 +1259,7 @@ a {
   margin: 0;
   padding: 1.1rem 1.4rem;
   border: 1px dashed var(--border-light);
-  border-radius: 14px;
+  border-radius: var(--r-md);
   background: var(--surface-2);
   color: var(--muted);
   font-size: 0.95rem;
@@ -963,68 +1327,109 @@ a {
   padding: 0.95rem 2rem;
   min-height: 48px;
   border: 1px solid var(--border-light);
-  box-shadow: 0 6px 18px rgb(var(--ink-shadow) / 0.08);
+  box-shadow: var(--shadow-2);
 }
 
 .btn-email:hover {
   border-color: var(--accent-deep);
   color: var(--accent-deep);
-  box-shadow: 0 8px 24px rgb(var(--ink-shadow) / 0.12);
+  box-shadow: var(--shadow-hover);
 }
 
 footer {
   border-block-start: 1px solid var(--border);
   background: var(--surface);
-  padding-block: 2.25rem;
+  padding-block: var(--space-4);
   color: var(--muted);
   font-size: 0.95rem;
   text-align: center;
 }
 
-footer p {
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.footer-inner p {
   margin: 0;
 }
+
+.footer-brand {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.footer-brand a {
+  color: inherit;
+  text-decoration: none;
+}
+
 footer a {
   color: var(--muted);
 }
+
 footer a:hover {
   color: var(--accent-deep);
 }
+
+.footer-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 1.25rem;
+}
+
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.footer-links a[aria-current="page"] {
+  color: var(--accent-deep);
+  font-weight: 700;
+}
+
 .sep {
   margin-inline: 0.5rem;
   color: var(--border-light);
 }
 
-/* Footer social icons - single sprite (social-icons-color.png), one
-   class per network. Sprite cells are 24px wide in CSS pixels (PNG is
-   4x for retina). */
 .social-links {
-  display: inline-flex;
-  gap: 1rem;
-  vertical-align: middle;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: var(--space-1);
 }
+
 .social-icon {
-  display: inline-block;
-  inline-size: 24px;
-  block-size: 24px;
-  background-image: url("/images/social-icons-color.png");
-  background-size: 144px 24px;
-  background-repeat: no-repeat;
-  opacity: 1;
-  transition: opacity 0.15s ease;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  color: var(--accent-deep);
+  transition:
+    background-color var(--dur-fast) ease,
+    border-color var(--dur-fast) ease;
 }
-.social-icon:hover,
-.social-icon:focus-visible {
-  opacity: 0.8;
+
+.social-icon svg {
+  width: 1.3rem;
+  height: 1.3rem;
 }
-.si-facebook {
-  background-position: 0 0;
-}
-.si-whatsapp {
-  background-position: -24px 0;
-}
-.si-email {
-  background-position: -48px 0;
+
+.social-icon:hover {
+  background: var(--accent-dim);
+  border-color: rgb(13 51 32 / 0.35);
 }
 
 /* ============================================================
@@ -1064,6 +1469,250 @@ footer a:hover {
   margin: 0 0 1.4rem;
 }
 
+/* Guide header line: category · updated · reading time (build-injected) */
+.article .article-meta {
+  margin: -1rem 0 var(--space-3);
+  color: var(--muted);
+  font-size: var(--fs-sm);
+}
+
+.article-meta a {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.article-meta a:hover {
+  text-decoration: underline;
+}
+
+/* Table of contents: disclosure in the column on small screens,
+   sticky rail beside the column on wide ones */
+.toc ol,
+.toc-rail ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: toc;
+}
+
+.toc li,
+.toc-rail li {
+  counter-increment: toc;
+}
+
+.toc a,
+.toc-rail a {
+  display: flex;
+  gap: 0.6rem;
+  padding-block: 0.35rem;
+  color: var(--text);
+  text-decoration: none;
+  line-height: 1.5;
+}
+
+.toc a::before,
+.toc-rail a::before {
+  content: counter(toc);
+  flex: none;
+  min-width: 1.2em;
+  color: var(--accent-deep);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.toc a:hover,
+.toc-rail a:hover {
+  color: var(--accent-deep);
+}
+
+.toc-inline {
+  margin: 0 0 var(--space-4);
+  padding: 0.25rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  font-size: 0.95rem;
+}
+
+.toc-inline summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.toc-inline[open] ol {
+  padding-block-end: 0.75rem;
+}
+
+.toc-rail {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .article article {
+    position: relative;
+  }
+
+  .toc-inline {
+    display: none;
+  }
+
+  .toc-rail {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    /* offset from the start (right) edge = sits past the end (left) side */
+    inset-inline-start: calc(100% + 3rem);
+    width: 14rem;
+  }
+
+  .toc-sticky {
+    position: sticky;
+    top: 6rem;
+    max-height: calc(100vh - 8rem);
+    overflow-y: auto;
+    font-size: var(--fs-sm);
+  }
+
+  .toc-title {
+    margin: 0 0 0.5rem;
+    font-weight: 800;
+    color: var(--muted);
+  }
+
+  .toc-rail a {
+    padding-inline-start: 0.75rem;
+    border-inline-start: 2px solid var(--border);
+    transition:
+      color var(--dur-fast) ease,
+      border-color var(--dur-fast) ease;
+  }
+
+  .toc-rail a[aria-current] {
+    color: var(--accent-deep);
+    font-weight: 700;
+    border-inline-start-color: var(--accent-deep);
+  }
+}
+
+/* FAQ accordion (shared by guides and the packages page) */
+.faq-list {
+  border-block-start: 1px solid var(--border);
+  margin-block-end: var(--space-4);
+}
+
+.faq-item {
+  border-block-end: 1px solid var(--border);
+}
+
+.faq-item summary,
+.excluded-details summary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding-block: 0.8rem;
+  padding-inline-end: 2.5rem;
+  font-weight: 800;
+  line-height: 1.45;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker,
+.excluded-details summary::-webkit-details-marker {
+  display: none;
+}
+
+/* plus that turns into a minus */
+.faq-item summary::before,
+.faq-item summary::after,
+.excluded-details summary::before,
+.excluded-details summary::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: 0.35rem;
+  top: 50%;
+  width: 0.9rem;
+  height: 2px;
+  background: var(--accent-deep);
+  border-radius: 2px;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+.faq-item summary::after,
+.excluded-details summary::after {
+  transform: rotate(90deg);
+}
+
+.faq-item[open] summary::after,
+.excluded-details[open] summary::after {
+  transform: rotate(0deg);
+}
+
+.faq-item summary:hover {
+  color: var(--accent-deep);
+}
+
+.article .faq-item p,
+.faq-item p {
+  margin: 0 0 1.1rem;
+  color: var(--muted);
+}
+
+/* Guides hub: category chips + grouped card lists */
+.chip-row {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.35rem 1rem;
+  border: 1px solid var(--border-light);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition:
+    border-color var(--dur-fast) ease,
+    color var(--dur-fast) ease;
+}
+
+.chip:hover {
+  border-color: var(--accent-deep);
+  color: var(--accent-deep);
+}
+
+.chip-count {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent-deep);
+  background: var(--accent-dim);
+  border-radius: var(--r-pill);
+  padding: 0 0.5rem;
+}
+
+.guide-group {
+  margin-block-start: var(--space-5);
+}
+
+.guide-group .guides-list {
+  margin-block-start: var(--space-3);
+}
+
 /* Guides hub - card list */
 .guides-list {
   list-style: none;
@@ -1084,24 +1733,24 @@ footer a:hover {
   height: 100%;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: var(--r-md);
   padding: 1.35rem 1.5rem;
   text-decoration: none;
   color: var(--text);
-  box-shadow: 0 4px 14px rgb(var(--ink-shadow) / 0.05);
+  box-shadow: var(--shadow-1);
   transition:
-    transform 200ms ease,
-    box-shadow 200ms ease,
-    border-color 200ms ease;
+    transform var(--dur-med) var(--ease-out),
+    box-shadow var(--dur-med) ease,
+    border-color var(--dur-med) ease;
 }
 
 .guides-list a:hover {
   transform: translateY(-3px);
   border-color: rgb(13 51 32 / 0.35);
-  box-shadow: 0 14px 32px rgb(var(--ink-shadow) / 0.12);
+  box-shadow: var(--shadow-hover);
 }
 
-.guides-list h2 {
+.guides-list h3 {
   font-size: 1.0625rem;
   font-weight: 800;
   line-height: 1.4;
@@ -1114,6 +1763,28 @@ footer a:hover {
   color: var(--muted);
   font-size: 0.95rem;
   line-height: 1.65;
+}
+
+/* Related guides row above the trailing CTA on guide pages */
+.related {
+  border-block-start: 1px solid var(--border);
+  padding-block: var(--space-5);
+}
+
+.related .container {
+  max-width: 64rem;
+}
+
+.related h2 {
+  font-size: clamp(1.4rem, 5vw, 1.75rem);
+  font-weight: 800;
+  margin: 0;
+}
+
+@media (min-width: 900px) {
+  .related .guides-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 .article-cta {
@@ -1145,17 +1816,17 @@ footer a:hover {
   width: 58px;
   height: 58px;
   border-radius: 50%;
-  background: linear-gradient(180deg, #2ee076, var(--wa-green));
+  background: linear-gradient(180deg, var(--wa-green-hi), var(--wa-green));
   color: var(--wa-green-dark);
   box-shadow:
     0 6px 20px rgb(var(--ink-shadow) / 0.25),
-    0 4px 16px rgb(37 211 102 / 0.35);
+    0 4px 16px rgb(var(--wa-glow) / 0.35);
   opacity: 0;
   transform: translateY(8px);
   pointer-events: none;
   transition:
-    opacity 200ms ease,
-    transform 200ms ease;
+    opacity var(--dur-med) ease,
+    transform var(--dur-med) var(--ease-out);
   z-index: 60;
 }
 
@@ -1185,8 +1856,8 @@ footer a:hover {
     opacity: 0;
     transform: translateY(14px);
     transition:
-      opacity 600ms ease,
-      transform 600ms ease;
+      opacity var(--dur-slow) var(--ease-out),
+      transform var(--dur-slow) var(--ease-out);
   }
   .js .reveal.in {
     opacity: 1;
@@ -1205,7 +1876,7 @@ footer a:hover {
 
 .packages-hero {
   padding-block: 9rem 5.5rem;
-  background: linear-gradient(145deg, var(--surface-2), #eef8f1);
+  background: linear-gradient(145deg, var(--surface-2), var(--tint-green));
   border-block-end: 1px solid var(--border);
 }
 
@@ -1255,13 +1926,6 @@ footer a:hover {
   margin-block-end: 2.25rem;
 }
 
-.section-header.compact h2 {
-  font-family: "Heebo", sans-serif;
-  font-size: clamp(1.8rem, 5vw, 2.65rem);
-  line-height: 1.2;
-  margin: 0 0 0.8rem;
-}
-
 .section-header.compact .section-intro {
   margin: 0;
 }
@@ -1274,18 +1938,20 @@ footer a:hover {
 }
 
 .package-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-width: 0;
   padding: 1.65rem;
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: var(--r-lg);
   background: var(--surface);
-  box-shadow: 0 12px 34px rgb(var(--ink-shadow) / 0.07);
+  box-shadow: var(--shadow-2);
+  scroll-margin-top: 6rem;
 }
 
 .package-card.featured {
-  border-color: var(--accent-deep);
+  border: 2px solid var(--accent-deep);
   box-shadow: 0 16px 40px rgb(13 51 32 / 0.14);
 }
 
@@ -1358,9 +2024,24 @@ footer a:hover {
 }
 
 .excluded {
+  margin: 0 0 var(--space-1);
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: var(--fs-sm);
   line-height: 1.65;
+}
+
+.excluded-details {
+  margin-block: var(--space-2) var(--space-3);
+  border-block: 1px solid var(--border);
+}
+
+.excluded-details summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
 }
 
 .package-card .btn {
@@ -1389,7 +2070,7 @@ footer a:hover {
 .terms-grid article {
   padding: 1.4rem;
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: var(--r-md);
   background: var(--surface);
 }
 
@@ -1414,9 +2095,9 @@ footer a:hover {
 .table-wrap {
   overflow-x: auto;
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: var(--r-md);
   background: var(--surface);
-  box-shadow: 0 8px 26px rgb(var(--ink-shadow) / 0.06);
+  box-shadow: var(--shadow-2);
 }
 
 .addons table {
@@ -1447,21 +2128,6 @@ footer a:hover {
   max-width: 52rem;
 }
 
-.faq details {
-  border-block-end: 1px solid var(--border);
-  padding-block: 1rem;
-}
-
-.faq summary {
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.faq details p {
-  margin: 0.75rem 0 0;
-  color: var(--muted);
-}
-
 .business-identity {
   padding-block: 3rem;
   text-align: center;
@@ -1478,11 +2144,6 @@ footer a:hover {
 
 .business-identity span {
   color: var(--muted);
-}
-
-.nav-links a[aria-current="page"] {
-  color: var(--accent-deep);
-  font-weight: 800;
 }
 
 @media (max-width: 900px) {
@@ -1524,10 +2185,5 @@ footer a:hover {
     padding: 0.6rem 1rem;
     color: var(--muted);
     font-size: 0.8rem;
-  }
-  /* every nav carries five items since "חבילות" was added, so on small
-     screens פרויקטים is dropped site-wide to keep the bar on one line */
-  .nav-links li:nth-child(2) {
-    display: none;
   }
 }

@@ -1,10 +1,36 @@
 ---
 // Shared trailing CTA for content pages - only the heading varies per page.
+// On guide pages it is preceded by a related-guides row (same category first).
+import { categoryOf, relatedTo } from "../data/guides";
+
 interface Props {
   title: string;
 }
 const { title } = Astro.props;
+
+const path = Astro.url.pathname;
+const related = categoryOf(path) ? relatedTo(path) : [];
 ---
+
+{
+  related.length > 0 && (
+    <nav class="related" aria-labelledby="related-title">
+      <div class="container">
+        <h2 id="related-title">מדריכים קשורים</h2>
+        <ul class="guides-list">
+          {related.map((g) => (
+            <li>
+              <a href={g.href}>
+                <h3>{g.title}</h3>
+                <p>{g.desc}</p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </nav>
+  )
+}
 
 <section class="article-cta" aria-labelledby="article-cta-title">
   <div class="container">

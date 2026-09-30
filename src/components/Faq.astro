@@ -1,6 +1,6 @@
 ---
-// Article-page FAQ: the {q, a} items are the single source for both the
-// visible h3/p markup and the FAQPage JSON-LD, so they can never drift.
+// FAQ accordion: the {q, a} items are the single source for both the
+// visible details/summary markup and the FAQPage JSON-LD, so they can never drift.
 // Answers may contain inline HTML (links); the schema gets a plain-text copy.
 interface FaqItem {
   q: string;
@@ -8,9 +8,10 @@ interface FaqItem {
 }
 interface Props {
   title?: string;
+  headingId?: string;
   items: FaqItem[];
 }
-const { title = "שאלות נפוצות", items } = Astro.props;
+const { title = "שאלות נפוצות", headingId, items } = Astro.props;
 
 const plain = (html: string) =>
   html
@@ -30,13 +31,15 @@ const schema = JSON.stringify({
 });
 ---
 
-<h2>{title}</h2>
-{
-  items.map(({ q, a }) => (
-    <>
-      <h3>{q}</h3>
-      <p set:html={a} />
-    </>
-  ))
-}
+<h2 id={headingId}>{title}</h2>
+<div class="faq-list">
+  {
+    items.map(({ q, a }) => (
+      <details class="faq-item">
+        <summary>{q}</summary>
+        <p set:html={a} />
+      </details>
+    ))
+  }
+</div>
 <script type="application/ld+json" set:html={schema} />

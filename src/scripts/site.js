@@ -1,4 +1,4 @@
-// Contact-link assembly, GA4 click events, floating WhatsApp button, reveal fade. Without this file the page still renders, but contact CTAs keep their placeholder href="#" - the real WhatsApp/email links only exist at runtime.
+// Contact-link assembly, GA4 click events, mobile menu, floating WhatsApp button, table-of-contents highlight, reveal fade. Without this file the page still renders, but contact CTAs keep their placeholder href="#" - the real WhatsApp/email links only exist at runtime.
 document.documentElement.classList.add("js");
 
 // Contact details are assembled at runtime, in parts, so the phone number and email address never appear in the static HTML that crawlers index.
@@ -53,14 +53,55 @@ document.documentElement.classList.add("js");
   track(".email-link", "email_click");
 })();
 
-// Floating WhatsApp button - appears after scrolling past the hero.
-const hero = document.querySelector(".hero, .packages-hero");
+// Mobile menu (<details>): close on link tap, Escape, or a tap outside.
+const menu = document.querySelector(".nav-menu");
+
+if (menu) {
+  const close = () => menu.removeAttribute("open");
+  menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", close));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && menu.open) {
+      close();
+      menu.querySelector("summary").focus();
+    }
+  });
+  document.addEventListener("click", (e) => {
+    if (menu.open && !menu.contains(e.target)) close();
+  });
+}
+
+// Floating WhatsApp button - appears after scrolling past the hero (or,
+// on guide pages, past the h1).
+const hero = document.querySelector(".hero, .packages-hero, .article h1");
 const waFloat = document.querySelector(".wa-float");
 
 if (hero && waFloat && "IntersectionObserver" in window) {
   new IntersectionObserver(([entry]) => {
     waFloat.classList.toggle("visible", !entry.isIntersecting);
   }).observe(hero);
+}
+
+// Table of contents: mark the section currently being read.
+const tocLinks = document.querySelectorAll(".toc-rail a");
+
+if (tocLinks.length && "IntersectionObserver" in window) {
+  const byId = new Map(
+    [...tocLinks].map((a) => [a.getAttribute("href").slice(1), a]),
+  );
+  const tocIo = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        tocLinks.forEach((a) => a.removeAttribute("aria-current"));
+        byId.get(entry.target.id)?.setAttribute("aria-current", "true");
+      }
+    },
+    { rootMargin: "0px 0px -70% 0px" },
+  );
+  byId.forEach((_a, id) => {
+    const h = document.getElementById(id);
+    if (h) tocIo.observe(h);
+  });
 }
 
 // Subtle fade-in for sections (respects prefers-reduced-motion via CSS).
