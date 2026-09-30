@@ -1,26 +1,17 @@
-// Contact-link assembly, GA4 click events, mobile menu, floating WhatsApp button, table-of-contents highlight, reveal fade. Without this file the page still renders, but contact CTAs keep their placeholder href="#" - the real WhatsApp/email links only exist at runtime.
-document.documentElement.classList.add("js");
+// Contact-link assembly, GA4 click events, mobile menu, mobile action bar, reading progress, table-of-contents highlight. Without this file the page still renders, but contact CTAs keep their placeholder href="#" - the real WhatsApp/email links only exist at runtime.
+import { waHref, email, phone } from "./contact.js";
 
-// Contact details are assembled at runtime, in parts, so the phone number and email address never appear in the static HTML that crawlers index.
+// Contact links get their real targets at runtime (see contact.js).
 (function () {
-  const cc = "972",
-    p1 = "50",
-    p2 = "521",
-    p3 = "2151";
-  const msg = "היי, ראיתי את האתר שלך ואשמח לדבר על פרויקט";
-  const waHref =
-    "https://wa.me/" + cc + p1 + p2 + p3 + "?text=" + encodeURIComponent(msg);
   // New tab keeps the page alive, so the GA4 click event queued below can still be sent once the delayed gtag.js finishes loading.
   document.querySelectorAll(".wa-link").forEach((a) => {
-    a.href = waHref;
+    a.href = waHref();
     a.target = "_blank";
     a.rel = "noopener";
   });
 
-  const user = "shay" + ".onestopshop";
-  const domain = "gmail" + ".com";
   document.querySelectorAll(".email-link").forEach((a) => {
-    a.href = "mailto:" + user + "@" + domain;
+    a.href = "mailto:" + email;
   });
 
   // Add contact details to the JSON-LD so crawlers that render JS (Google) see them, while keeping them out of the static HTML. Pages can carry several JSON-LD blocks (Article, FAQPage, ...) in any order - only the business schema gets the contact details.
@@ -30,8 +21,8 @@ document.documentElement.classList.add("js");
       try {
         const data = JSON.parse(ld.textContent);
         if (data["@type"] === "ProfessionalService") {
-          data.telephone = "+" + cc + p1 + p2 + p3;
-          data.email = user + "@" + domain;
+          data.telephone = phone;
+          data.email = email;
           ld.textContent = JSON.stringify(data);
         }
       } catch {
@@ -70,15 +61,41 @@ if (menu) {
   });
 }
 
-// Floating WhatsApp button - appears after scrolling past the hero (or,
-// on guide pages, past the h1).
-const hero = document.querySelector(".hero, .packages-hero, .article h1");
-const waFloat = document.querySelector(".wa-float");
+// Mobile action bar - appears once the first screen (hero or h1) scrolls away,
+// so it never covers the hero's own call to action.
+const firstScreen = document.querySelector(".hero, .packages-hero, main h1");
+const actionBar = document.querySelector(".action-bar");
 
-if (hero && waFloat && "IntersectionObserver" in window) {
+if (firstScreen && actionBar && "IntersectionObserver" in window) {
   new IntersectionObserver(([entry]) => {
-    waFloat.classList.toggle("visible", !entry.isIntersecting);
-  }).observe(hero);
+    actionBar.classList.toggle("visible", !entry.isIntersecting);
+  }).observe(firstScreen);
+}
+
+// Reading progress on guide pages (transform only, one rAF per scroll burst).
+const progress = document.querySelector(".read-progress span");
+const article = document.querySelector(".article article");
+
+if (progress && article) {
+  let queued = false;
+  const paint = () => {
+    queued = false;
+    const top = article.offsetTop;
+    const span = article.offsetHeight - window.innerHeight;
+    const ratio = Math.min(1, Math.max(0, (window.scrollY - top) / Math.max(span, 1)));
+    progress.style.transform = `scaleX(${ratio})`;
+  };
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!queued) {
+        queued = true;
+        requestAnimationFrame(paint);
+      }
+    },
+    { passive: true },
+  );
+  paint();
 }
 
 // Table of contents: mark the section currently being read.
@@ -102,25 +119,4 @@ if (tocLinks.length && "IntersectionObserver" in window) {
     const h = document.getElementById(id);
     if (h) tocIo.observe(h);
   });
-}
-
-// Subtle fade-in for sections (respects prefers-reduced-motion via CSS).
-const revealed = document.querySelectorAll(".reveal");
-
-if (revealed.length && "IntersectionObserver" in window) {
-  const io = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("in");
-          io.unobserve(entry.target);
-        }
-      }
-    },
-    { rootMargin: "0px 0px -10% 0px" },
-  );
-
-  revealed.forEach((el) => io.observe(el));
-} else {
-  revealed.forEach((el) => el.classList.add("in"));
 }

@@ -1,6 +1,7 @@
 ---
 // variant "home": index page - anchor links into the one-pager.
 // Everywhere else the section links point back into "/".
+// The quote builder CTA sits beside the links on desktop.
 // The current page is derived from the URL, so no page has to declare it.
 interface Props {
   variant: "home" | "article" | "packages";
@@ -10,11 +11,10 @@ const { variant } = Astro.props;
 const home = variant === "home";
 const here = Astro.url.pathname.replace(/\/?$/, "/");
 const links = [
-  { href: home ? "#hero" : "/", label: "ראשי" },
-  { href: home ? "#projects" : "/#projects", label: "פרויקטים" },
+  { href: home ? "#how" : "/#how", label: "איך זה עובד" },
+  { href: home ? "#work" : "/#work", label: "עבודות" },
   { href: "/website-packages/", label: "חבילות ומחירים" },
   { href: "/guides/", label: "מדריכים" },
-  { href: home ? "#contact" : "/#contact", label: "יצירת קשר" },
 ].map((l) => ({ ...l, current: l.href === here }));
 ---
 
@@ -34,6 +34,9 @@ const links = [
         ))
       }
     </ul>
+    <a class="btn btn-primary nav-cta" href={home ? "#quote" : "/#quote"}
+      >בונים הצעה <span aria-hidden="true">&#8592;</span></a
+    >
     <details class="nav-menu">
       <summary>
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -51,6 +54,9 @@ const links = [
             </li>
           ))
         }
+        <li>
+          <a class="wa-link" href="#">כתבו לנו בוואטסאפ</a>
+        </li>
       </ul>
     </details>
   </div>

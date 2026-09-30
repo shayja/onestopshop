@@ -1,0 +1,28 @@
+---
+// Mobile-only bottom bar, shown once the page's first screen scrolls away.
+// "article": a question prompt beside WhatsApp; otherwise the quote builder.
+interface Props {
+  variant: "home" | "article" | "default";
+}
+const { variant } = Astro.props;
+---
+
+<div class="action-bar" data-variant={variant}>
+  {
+    variant === "article" ? (
+      <p class="action-bar-text">יש לכם שאלה על זה?</p>
+    ) : (
+      <a class="btn btn-primary action-bar-main" href={variant === "home" ? "#quote" : "/#quote"}>
+        בונים הצעה
+      </a>
+    )
+  }
+  <a
+    class:list={["btn btn-whatsapp wa-link", variant === "article" ? "action-bar-wa-text" : "action-bar-wa"]}
+    href="#"
+    aria-label={variant === "article" ? undefined : "וואטסאפ"}
+  >
+    <svg class="icon-wa" aria-hidden="true" focusable="false"><use href="#icon-whatsapp"></use></svg>
+    {variant === "article" && "שאלו אותנו"}
+  </a>
+</div>
