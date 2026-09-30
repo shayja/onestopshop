@@ -1,54 +1,50 @@
 ---
 import { getImage, Picture } from "astro:assets";
 import Base from "../layouts/Base.astro";
-import hero1 from "../assets/images/hero-1.webp";
-import hero2 from "../assets/images/hero-2.webp";
-import hero3 from "../assets/images/hero-3.webp";
-import automationPhoto from "../assets/images/automation-photo.webp";
-import includedPhoto from "../assets/images/included-photo.webp";
-import ctaPhoto from "../assets/images/cta-photo.webp";
+import QuoteBuilder from "../components/QuoteBuilder.astro";
+import { packages } from "../data/packages";
+import { allGuides } from "../data/guides";
+import heroPhoto from "../assets/images/hero-piano.jpg";
+import processPhoto from "../assets/images/process-gerbera.jpg";
+import ctaPhoto from "../assets/images/cta-milkyway.jpg";
 import projectDj from "../assets/images/project-dj.jpg";
 import projectMusician from "../assets/images/project-musician.webp";
 import projectApp from "../assets/images/project-app.webp";
 import projectKitchen from "../assets/images/project-kitchen.webp";
 
-// The hero and band photos are CSS backgrounds, so they can't go through
-// <Picture>; generate a desktop and a mobile rendition for each here and
-// inject the hashed URLs via the style/script tags in the head below.
-// 700px is the same breakpoint the old hand-made -m variants used.
+// Hero and closing-CTA photos sit under navy overlays as CSS backgrounds,
+// so they can't go through <Picture>: generate desktop and mobile webp
+// renditions here and inject the hashed URLs with an inline <style>.
 const rendition = (src: ImageMetadata, width: number, quality: number) =>
   getImage({ src, format: "webp", width, quality });
 
-const heroDesktop = await Promise.all(
-  [hero1, hero2, hero3].map((h) => rendition(h, 1600, 75)),
-);
-const heroMobile = await Promise.all(
-  [hero1, hero2, hero3].map((h) => rendition(h, 900, 75)),
-);
+const [heroDesktop, heroMobile, ctaDesktop, ctaMobile] = await Promise.all([
+  rendition(heroPhoto, 1800, 70),
+  rendition(heroPhoto, 900, 68),
+  rendition(ctaPhoto, 1600, 60),
+  rendition(ctaPhoto, 900, 60),
+]);
 
-// The bands render under a heavy ivory wash (--band-wash 0.82-0.9), so a
-// lower encode quality is invisible there and saves real bytes.
-const bands = await Promise.all(
-  [
-    { selector: ".automation", src: automationPhoto },
-    { selector: ".included", src: includedPhoto },
-    { selector: ".final-cta", src: ctaPhoto },
-  ].map(async ({ selector, src }) => ({
-    selector,
-    desktop: (await rendition(src, 1600, 65)).src,
-    mobile: (await rendition(src, 900, 65)).src,
-  })),
-);
-
-// hero-1 is the no-JS fallback (the inline script overrides --hero-img).
 const bgCss = [
-  `.hero-photo{background-image:var(--hero-img,url("${heroDesktop[0].src}"))}`,
-  ...bands.map((b) => `${b.selector}{--band-img:url("${b.desktop}")}`),
+  `.hero{--hero-img:url("${heroDesktop.src}")}`,
+  `.final-cta{--cta-img:url("${ctaDesktop.src}")}`,
   `@media (max-width:700px){`,
-  `.hero-photo{background-image:var(--hero-img,url("${heroMobile[0].src}"))}`,
-  ...bands.map((b) => `${b.selector}{--band-img:url("${b.mobile}")}`),
+  `.hero{--hero-img:url("${heroMobile.src}")}`,
+  `.final-cta{--cta-img:url("${ctaMobile.src}")}`,
   `}`,
 ].join("");
+
+const popular = [
+  { href: "/website-cost/", label: "כמה עולה אתר?" },
+  { href: "/website-timeline/", label: "כמה זמן זה לוקח?" },
+  { href: "/landing-page-or-website/", label: "דף נחיתה או אתר?" },
+  { href: "/business-app/", label: "צריך אפליקציה?" },
+  { href: "/automation-guide/", label: "מה זה אוטומציה לעסק?" },
+];
+
+const searchIndex = JSON.stringify(
+  allGuides.map(({ href, title, desc }) => ({ href, title, desc })),
+);
 
 const ld0 = String.raw`{
         "@context": "https://schema.org",
@@ -81,459 +77,299 @@ const ld0 = String.raw`{
   ogTitle={"One Stop Shop - בניית אתרים, אפליקציות ואוטומציה לעסקים"}
   ogDescription={"בניית אתרים, אפליקציות ואוטומציה לעסקים - הכול במקום אחד, מאפיון ועד השקה."}
   variant="home"
-  waFloat={true}
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={ld0} />
   </Fragment>
   <Fragment slot="head-late">
     <style is:inline set:html={bgCss}></style>
-    <script
-      is:inline
-      define:vars={{
-        heroDesktop: heroDesktop.map((h) => h.src),
-        heroMobile: heroMobile.map((h) => h.src),
-      }}
-    >
-      (function () {
-        var n = Math.floor(Math.random() * 3);
-        var mobile = window.matchMedia("(max-width: 700px)").matches;
-        var href = (mobile ? heroMobile : heroDesktop)[n];
-        document.documentElement.style.setProperty(
-          "--hero-img",
-          'url("' + href + '")',
-        );
-        var l = document.createElement("link");
-        l.rel = "preload";
-        l.as = "image";
-        l.href = href;
-        l.setAttribute("fetchpriority", "high");
-        document.head.appendChild(l);
-      })();
-    </script>
+    <link
+      rel="preload"
+      as="image"
+      href={heroMobile.src}
+      media="(max-width: 700px)"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href={heroDesktop.src}
+      media="(min-width: 701px)"
+      fetchpriority="high"
+    />
   </Fragment>
-    <header class="hero" id="hero">
-      <div class="hero-art" aria-hidden="true">
-        <div class="hero-photo"></div>
-        <div class="hero-overlay"></div>
-      </div>
-      <div class="container">
-        <p class="hero-brand" dir="ltr">
-          One Stop Shop<span class="accent-dot" aria-hidden="true">.</span>
+
+  <header class="hero" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="kicker">סטודיו דיגיטלי לעסקים קטנים</p>
+        <h1>כל פרויקט נבנה מאפס, בדיוק סביב מה שהעסק שלכם צריך.</h1>
+        <p class="hero-sub">
+          אתרים, חנויות, אפליקציות ואוטומציה - מאפיון ועד השקה, במחיר סגור
+          מראש. האתר והחשבונות בבעלותכם.
         </p>
-        <h1>אתרים, אפליקציות ואוטומציה לעסק שלכם - הכול במקום אחד</h1>
-        <p class="hero-value">
-          משלב הרעיון ועד העלייה לאוויר: אפיון, עיצוב, פיתוח וחיבור למערכות של
-          העסק.
-        </p>
-        <div class="cta-row hero-ctas">
-          <a class="btn btn-whatsapp wa-link" href="#">
+        <div class="cta-row">
+          <a class="btn btn-ghost-light wa-link" href="#">
             <svg class="icon-wa" aria-hidden="true" focusable="false">
-              <use href="#icon-whatsapp" />
+              <use href="#icon-whatsapp"></use>
             </svg>
-            דברו איתנו בוואטסאפ
+            או פשוט כתבו לנו
           </a>
-          <a class="btn btn-ghost" href="/website-packages/"
-            >חבילות ומחירים <span aria-hidden="true">&#8592;</span></a
-          >
         </div>
-        <ul class="hero-trust">
-          <li>מחיר ולוח זמנים סגורים מראש</li>
-          <li>האתר והחשבונות בבעלותכם</li>
-          <li>חודש ליווי אחרי ההשקה</li>
+      </div>
+      <QuoteBuilder />
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="live-strip" aria-labelledby="live-title">
+      <div class="container">
+        <h2 id="live-title">חי באוויר עכשיו:</h2>
+        <ul>
+          <li><a dir="ltr" href="https://line808.com/" target="_blank" rel="noopener">line808.com</a></li>
+          <li><a dir="ltr" href="https://emilyjacoby.me/he" target="_blank" rel="noopener">emilyjacoby.me</a></li>
+          <li><a dir="ltr" href="http://warendorf.co.il" target="_blank" rel="noopener">warendorf.co.il</a></li>
+          <li>
+            <a href="https://apps.apple.com/il/app/sored/id6774323194" target="_blank" rel="noopener"
+              >שורד ב-App Store</a
+            >
+          </li>
         </ul>
       </div>
-    </header>
+    </section>
 
-    <main id="main-content">
-      <section class="how" aria-label="איך זה עובד">
-        <div class="container">
-          <ol class="how-strip">
-            <li>שיחת אפיון קצרה</li>
-            <li>הצעת מחיר סגורה לפרויקט</li>
-            <li>אתר באוויר תוך 2-3 שבועות</li>
-          </ol>
+    <section class="section" id="paths" aria-labelledby="paths-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title" id="paths-title">שלושה מסלולים. מחיר ידוע מראש.</h2>
+          <p class="section-intro">
+            כל מסלול מגיע עם תכולה כתובה ולוח זמנים. מה שלא כתוב - לא יופיע
+            בחשבונית.
+          </p>
         </div>
-      </section>
+        <ul class="paths">
+          <li>
+            <span class="path-icon" aria-hidden="true">
+              <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 9h18"></path></svg>
+            </span>
+            <h3>אתר לעסק</h3>
+            <p>דף נחיתה, אתר תדמית או אתר עסקי עם תוכן.</p>
+            <p class="path-price">
+              החל מ-<strong>{packages.landing.price}</strong> + מע״מ
+            </p>
+            <p class="path-time">מסירה: 5 ימים עד 5 שבועות</p>
+            <a href="/website-packages/">ארבע החבילות <span aria-hidden="true">&#8592;</span></a>
+          </li>
+          <li class="featured">
+            <span class="path-icon" aria-hidden="true">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M3 7h18l-2 12H5L3 7Z"></path><path d="M8 7a4 4 0 0 1 8 0"></path></svg>
+            </span>
+            <h3>חנות ופיתוח מותאם</h3>
+            <p>חנות אונליין, אזור לקוחות, סליקה ישראלית וחיבור למערכות.</p>
+            <p class="path-price">
+              החל מ-<strong>{packages.custom.price}</strong> + מע״מ
+            </p>
+            <p class="path-time">{packages.custom.time}</p>
+            <a href={`/website-packages/#${packages.custom.id}`}>מה כלול <span aria-hidden="true">&#8592;</span></a>
+          </li>
+          <li>
+            <span class="path-icon" aria-hidden="true">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"></path></svg>
+            </span>
+            <h3>אוטומציה ו-AI</h3>
+            <p>מענה ללידים, תיאום פגישות וחשבוניות שנשלחות לבד.</p>
+            <p class="path-price"><strong>לפי אפיון</strong></p>
+            <p class="path-time">מתחילים מתהליך אחד שחוסך הכי הרבה זמן</p>
+            <a href="/automation-guide/">דוגמאות לתהליכים <span aria-hidden="true">&#8592;</span></a>
+          </li>
+        </ul>
+      </div>
+    </section>
 
-      <section class="projects" id="projects" aria-labelledby="projects-title">
-        <div class="container">
-          <h2 class="section-title ruled" id="projects-title">פרויקטים אחרונים</h2>
-
-          <article class="project reveal">
-            <a
-              class="frame frame-browser"
-              href="https://line808.com/"
-              target="_blank"
-              rel="noopener"
-              tabindex="-1"
-              aria-hidden="true"
-            >
-              <div class="frame-bar">
-                <span class="fd"></span><span class="fd"></span
-                ><span class="fd"></span
-                ><span class="frame-url">line808.com</span>
-              </div>
+    <section class="section section-alt" id="work" aria-labelledby="work-title">
+      <div class="container">
+        <h2 class="section-title" id="work-title">עבודות שחיות באוויר</h2>
+        <div class="cases">
+          <article class="case">
+            <a class="case-media" href="https://line808.com/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
               <Picture
                 src={projectDj}
                 formats={["avif"]}
                 fallbackFormat="webp"
-                widths={[480, 760, 976, 1440]}
-                sizes="(max-width: 1024px) calc(100vw - 3rem), 976px"
-                alt="צילום מסך של אתר line808 - עמוד הבית של DJ Line808"
+                widths={[480, 760, 976]}
+                sizes="(max-width: 900px) calc(100vw - 3rem), 560px"
+                alt=""
                 loading="lazy"
               />
             </a>
-            <p class="proj-num" aria-hidden="true">01</p>
-            <h3>אתר תדמית ל־DJ Line808</h3>
-            <ul class="tags" aria-label="סוג הפרויקט">
-              <li>אתר תדמית</li>
-              <li>יומן הופעות</li>
-              <li>מערכת פניות</li>
-            </ul>
-            <p>
-              ל־Line808 לא הייתה נוכחות דיגיטלית והופעות נסגרו רק דרך טלפון
-              והמלצות. בנינו אתר תדמית עם יומן הופעות, נגן סטים ומערכת פניות -
-              היום לקוחות סוגרים דרך האתר.
-            </p>
-            <a
-              class="btn btn-link"
-              target="_blank"
-              rel="noopener"
-              href="https://line808.com/"
-              >קישור לאתר <span aria-hidden="true">&#8592;</span></a
-            >
+            <div class="case-body">
+              <h3>DJ Line808 - אתר תדמית</h3>
+              <dl>
+                <div><dt>לפני</dt><dd>הופעות נסגרו רק דרך טלפון והמלצות.</dd></div>
+                <div><dt>בנינו</dt><dd>אתר תדמית עם יומן הופעות, נגן סטים ומערכת פניות.</dd></div>
+                <div class="case-result"><dt>היום</dt><dd>לקוחות סוגרים דרך האתר.</dd></div>
+              </dl>
+              <a href="https://line808.com/" target="_blank" rel="noopener">לאתר <span aria-hidden="true">&#8592;</span></a>
+            </div>
           </article>
 
-          <article class="project reveal">
-            <a
-              class="frame frame-browser"
-              href="https://emilyjacoby.me/he"
-              target="_blank"
-              rel="noopener"
-              tabindex="-1"
-              aria-hidden="true"
-            >
-              <div class="frame-bar">
-                <span class="fd"></span><span class="fd"></span
-                ><span class="fd"></span
-                ><span class="frame-url">emilyjacoby.me</span>
-              </div>
+          <article class="case">
+            <a class="case-media" href="https://emilyjacoby.me/he" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
               <Picture
                 src={projectMusician}
                 formats={["avif"]}
                 fallbackFormat="webp"
-                widths={[480, 760, 976, 1440]}
-                sizes="(max-width: 1024px) calc(100vw - 3rem), 976px"
-                alt="צילום מסך של אתר הפסנתרנית אמילי יעקובי"
+                widths={[480, 760, 976]}
+                sizes="(max-width: 900px) calc(100vw - 3rem), 560px"
+                alt=""
                 loading="lazy"
               />
             </a>
-            <p class="proj-num" aria-hidden="true">02</p>
-            <h3>אתר לפסנתרנית אמילי יעקובי</h3>
-            <ul class="tags" aria-label="סוג הפרויקט">
-              <li>אתר אמן</li>
-              <li>נגן מדיה</li>
-              <li>יצירת קשר</li>
-            </ul>
-            <p>
-              אמילי הייתה צריכה מקום אחד שמרכז מוזיקה, הופעות ויצירת קשר לקהל
-              ולמפיקים. בנינו אתר אמן מהיר שמציג קטעי נגינה מרסיטלים ואפשרויות
-              שונות לשת״פ (ליווי סולנים/יות, הזמנה לרסיטלים, שיעורי נגינה).
-            </p>
-            <a
-              class="btn btn-link"
-              target="_blank"
-              rel="noopener"
-              href="https://emilyjacoby.me/he"
-              >קישור לאתר <span aria-hidden="true">&#8592;</span></a
-            >
+            <div class="case-body">
+              <h3>הפסנתרנית אמילי יעקובי - אתר אמן</h3>
+              <dl>
+                <div><dt>לפני</dt><dd>מוזיקה, הופעות ופניות בלי מקום אחד שמרכז אותם.</dd></div>
+                <div><dt>בנינו</dt><dd>אתר מהיר עם קטעי נגינה מרסיטלים ואפשרויות לשיתופי פעולה: ליווי סולנים, רסיטלים ושיעורי נגינה.</dd></div>
+              </dl>
+              <a href="https://emilyjacoby.me/he" target="_blank" rel="noopener">לאתר <span aria-hidden="true">&#8592;</span></a>
+            </div>
           </article>
 
-          <article class="project reveal">
-            <a
-              class="frame frame-phone"
-              href="https://apps.apple.com/il/app/sored/id6774323194"
-              target="_blank"
-              rel="noopener"
-              tabindex="-1"
-              aria-hidden="true"
-            >
+          <article class="case">
+            <a class="case-media case-media-app" href="https://apps.apple.com/il/app/sored/id6774323194" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
               <Picture
                 src={projectApp}
                 formats={["avif"]}
                 fallbackFormat="webp"
-                widths={[240, 480, 780]}
-                sizes="(max-width: 375px) 64vw, 240px"
-                alt="צילום מסך של אפליקציית שורד - ספירה לאחור"
+                widths={[240, 480]}
+                sizes="200px"
+                alt=""
                 loading="lazy"
               />
             </a>
-            <p class="proj-num" aria-hidden="true">03</p>
-            <h3>שורד/Sored - אפליקציית מובייל</h3>
-            <ul class="tags" aria-label="סוג הפרויקט">
-              <li>אפליקציית iOS</li>
-              <li>App Store</li>
-            </ul>
-            <p>
-              אפליקציה לתלמידים, סטודנטים וחיילים שמציגה כמה זמן נשאר לסיום שנת
-              הלימודים/סמסטר/תאריך השחרור, מתי יום ההולדת, החופשה הבאה וכד׳.
-            </p>
-            <a
-              class="btn btn-link"
-              target="_blank"
-              rel="noopener"
-              href="https://apps.apple.com/il/app/sored/id6774323194"
-              >קישור ל־App Store <span aria-hidden="true">&#8592;</span></a
-            >
+            <div class="case-body">
+              <h3>שורד/Sored - אפליקציית מובייל</h3>
+              <dl>
+                <div><dt>בנינו</dt><dd>אפליקציה לתלמידים, סטודנטים וחיילים שמציגה כמה זמן נשאר לסיום השנה, הסמסטר או השירות, עד יום ההולדת והחופשה הבאה.</dd></div>
+              </dl>
+              <a href="https://apps.apple.com/il/app/sored/id6774323194" target="_blank" rel="noopener">ל-App Store <span aria-hidden="true">&#8592;</span></a>
+            </div>
           </article>
 
-          <article class="project reveal">
-            <a
-              class="frame frame-browser"
-              href="http://warendorf.co.il"
-              target="_blank"
-              rel="noopener"
-              tabindex="-1"
-              aria-hidden="true"
-            >
-              <div class="frame-bar">
-                <span class="fd"></span><span class="fd"></span
-                ><span class="fd"></span
-                ><span class="frame-url">warendorf.co.il</span>
-              </div>
+          <article class="case">
+            <a class="case-media" href="http://warendorf.co.il" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
               <Picture
                 src={projectKitchen}
                 formats={["avif"]}
                 fallbackFormat="webp"
-                widths={[480, 760, 976, 1440]}
-                sizes="(max-width: 1024px) calc(100vw - 3rem), 976px"
-                alt="צילום מסך של אתר ורנדורף ישראל - מטבחי יוקרה מגרמניה"
+                widths={[480, 760, 976]}
+                sizes="(max-width: 900px) calc(100vw - 3rem), 560px"
+                alt=""
                 loading="lazy"
               />
             </a>
-            <p class="proj-num" aria-hidden="true">04</p>
-            <h3>ורנדורף ישראל - מטבחי יוקרה מגרמניה</h3>
-            <ul class="tags" aria-label="סוג הפרויקט">
-              <li>אתר תדמית</li>
-              <li>מותג יוקרה</li>
-              <li>קולקציות</li>
-            </ul>
-            <p>
-              אתר היבואן הישראלי של מטבחי היוקרה הגרמניים וורנדורף. האתר מציג את
-              הקולקציות, אולם התצוגה ופרטי יצירת קשר - חלון ראווה דיגיטלי למותג
-              יוקרה.
-            </p>
-            <a
-              class="btn btn-link"
-              target="_blank"
-              rel="noopener"
-              href="http://warendorf.co.il"
-              >קישור לאתר <span aria-hidden="true">&#8592;</span></a
-            >
+            <div class="case-body">
+              <h3>ורנדורף ישראל - מטבחי יוקרה</h3>
+              <dl>
+                <div><dt>בנינו</dt><dd>חלון ראווה דיגיטלי ליבואן מטבחי היוקרה הגרמניים: קולקציות, אולם התצוגה ופרטי יצירת קשר.</dd></div>
+              </dl>
+              <a href="http://warendorf.co.il" target="_blank" rel="noopener">לאתר <span aria-hidden="true">&#8592;</span></a>
+            </div>
           </article>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section
-        class="automation reveal"
-        id="automation"
-        aria-labelledby="automation-title"
-      >
-        <div class="container">
-          <div class="section-header">
-            <h2 class="section-title" id="automation-title">
-              אוטומציה עסקית וסוכני AI שחוסכים לכם עשרות שעות
-            </h2>
-            <p class="section-intro">
-              אנחנו לא רק בונים חלון ראווה - אנחנו מחברים את האתר שלכם למערכות
-              התפעוליות של העסק.
+    <section class="section" id="how" aria-labelledby="how-title">
+      <div class="container">
+        <div class="how-head">
+          <h2 class="section-title" id="how-title">בכל שלב יודעים מה מקבלים</h2>
+          <Picture
+            src={processPhoto}
+            formats={["avif"]}
+            fallbackFormat="webp"
+            widths={[480, 760, 1120]}
+            sizes="(max-width: 900px) calc(100vw - 3rem), 560px"
+            alt=""
+            loading="lazy"
+            class="how-photo"
+          />
+        </div>
+        <ol class="steps">
+          <li>
+            <h3>שיחת אפיון</h3>
+            <p>מגדירים יחד מטרות, קהל ותכולה.</p>
+            <p class="step-gets">מקבלים: תכולה כתובה</p>
+          </li>
+          <li>
+            <h3>הצעת מחיר סגורה</h3>
+            <p>כל שינוי בתכולה מקבל מחיר מעודכן לפני שממשיכים.</p>
+            <p class="step-gets">מקבלים: מחיר ולוח זמנים בכתב</p>
+          </li>
+          <li>
+            <h3>עיצוב ובנייה</h3>
+            <p>עיצוב מקורי, מותאם לנייד קודם כול.</p>
+            <p class="step-gets">מקבלים: צפייה בהתקדמות בזמן אמת</p>
+          </li>
+          <li>
+            <h3>השקה וליווי</h3>
+            <p>
+              דומיין, אחסון, SSL ו<a href="/google-business-profile/">פרופיל עסקי בגוגל</a> -
+              הכול מחובר.
             </p>
-          </div>
+            <p class="step-gets">מקבלים: חודש ליווי וכל החשבונות</p>
+          </li>
+        </ol>
+      </div>
+    </section>
 
-          <div class="flows-grid">
-            <div class="flow-card">
-              <span class="flow-icon" aria-hidden="true"
-                ><svg class="icon" viewBox="0 0 24 24" focusable="false"
-                  ><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z" /></svg
-                ></span
-              >
-              <h3>תגובה מיידית ללידים</h3>
-              <ol class="flow-steps">
-                <li class="step">טופס / וואטסאפ נכנס</li>
-                <li class="step highlight">מענה AI מותאם אישית</li>
-                <li class="step">עדכון אוטומטי ב-CRM והתראה</li>
-              </ol>
-            </div>
-
-            <div class="flow-card">
-              <span class="flow-icon" aria-hidden="true"
-                ><svg class="icon" viewBox="0 0 24 24" focusable="false"
-                  ><rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" /></svg
-                ></span
-              >
-              <h3>תיאום פגישות אוטומטי</h3>
-              <ol class="flow-steps">
-                <li class="step">בקשה לקביעת שיחה</li>
-                <li class="step highlight">פתיחת יומן בזמן אמת</li>
-                <li class="step">סנכרון מלא + תזכורת בוואטסאפ</li>
-              </ol>
-            </div>
-
-            <div class="flow-card">
-              <span class="flow-icon" aria-hidden="true"
-                ><svg class="icon" viewBox="0 0 24 24" focusable="false"
-                  ><path d="M12.59 2.59A2 2 0 0 0 11.17 2H4a2 2 0 0 0-2 2v7.17a2 2 0 0 0 .59 1.42l8.7 8.7a2.43 2.43 0 0 0 3.42 0l6.58-6.58a2.43 2.43 0 0 0 0-3.42Z" /><circle cx="7.5" cy="7.5" r="1" /></svg
-                ></span
-              >
-              <h3>הצעת מחיר בלייב</h3>
-              <ol class="flow-steps">
-                <li class="step">העלאת תמונה / תיאור צורך</li>
-                <li class="step highlight">ניתוח אלגוריתמי מבוסס AI</li>
-                <li class="step">פלט מיידי של הצעת מחיר</li>
-              </ol>
-            </div>
-          </div>
-          <a class="btn btn-link section-more" href="/automation-guide/"
-            >למדריך האוטומציה המלא <span aria-hidden="true">&#8592;</span></a
-          >
-        </div>
-      </section>
-
-      <section class="pricing reveal" id="pricing" aria-labelledby="pricing-title">
-        <div class="container">
-          <h2 class="section-title ruled" id="pricing-title">חבילות ומחירים</h2>
+    <section class="section section-alt" id="guides" aria-labelledby="guides-title">
+      <div class="container guides-grid">
+        <div>
+          <h2 class="section-title" id="guides-title">יש לכם שאלה? כנראה כבר ענינו עליה.</h2>
           <p class="section-intro">
-            תכולה כתובה, מחיר סגור ולוח זמנים ברור - לפני שמתחילים.
-          </p>
-          <ul class="price-grid">
-            <li>
-              <a href="/website-packages/#pkg-landing">
-                <h3>דף נחיתה ממוקד</h3>
-                <p class="price"><strong>1,000 ₪</strong> <span class="vat">+ מע״מ</span></p>
-                <p>עמוד אחד · מסירה בתוך 5 ימים</p>
-              </a>
-            </li>
-            <li>
-              <a href="/website-packages/#pkg-brochure">
-                <h3>אתר תדמית ממוקד</h3>
-                <p class="price"><strong>5,000 ₪</strong> <span class="vat">+ מע״מ</span></p>
-                <p>עד 5 עמודים · מסירה בתוך שבועיים</p>
-              </a>
-            </li>
-            <li class="featured">
-              <a href="/website-packages/#pkg-business">
-                <span class="package-badge">מומלץ</span>
-                <h3>אתר עסקי ותוכן</h3>
-                <p class="price"><strong>10,000 ₪</strong> <span class="vat">+ מע״מ</span></p>
-                <p>עד 10 עמודים · מסירה בתוך 4-5 שבועות</p>
-              </a>
-            </li>
-            <li>
-              <a href="/website-packages/#pkg-custom">
-                <h3>חנות או פיתוח מותאם</h3>
-                <p class="price"><span class="price-from">החל מ-</span><strong>18,000 ₪</strong> <span class="vat">+ מע״מ</span></p>
-                <p>מסירה בתוך 6-8 שבועות מסיום האפיון</p>
-              </a>
-            </li>
-          </ul>
-          <a class="btn btn-link section-more" href="/website-packages/"
-            >כל הפרטים על החבילות <span aria-hidden="true">&#8592;</span></a
-          >
-        </div>
-      </section>
-
-      <section
-        class="included reveal"
-        id="included"
-        aria-labelledby="included-title"
-      >
-        <div class="container">
-          <h2 class="section-title ruled" id="included-title">מה כולל פרויקט בניית אתר</h2>
-          <ul class="included-list">
-            <li>
-              <strong>פגישת אפיון</strong>
-              <p>שיחה אחת שבה מגדירים יחד מטרות, קהל ותכולה מדויקת.</p>
-            </li>
-            <li>
-              <strong>עיצוב מותאם אישית</strong>
-              <p>עיצוב מקורי שייבנה רק עבורכם וללא שימוש בתבניות מוכנות.</p>
-            </li>
-            <li>
-              <strong>הצגת התקדמות</strong>
-              <p>צפייה בהתקדמות הפרויקט בזמן אמת.</p>
-            </li>
-            <li>
-              <strong>התאמה מלאה לנייד</strong>
-              <p>רוב הלקוחות שלכם יגיעו מהטלפון, והאתר בנוי לזה קודם כול.</p>
-            </li>
-            <li>
-              <strong>הטמעת מערכות צד שלישי</strong>
-              <p>חיבור למערכות קיימות כמו CRM, ניוזלטרים, תשלום מקוון ועוד.</p>
-            </li>
-            <li>
-              <strong>יצירת קשר</strong>
-              <p>שילוב כל האפשרויות ליצירת קשר: וואטסאפ / שיחה / אימייל.</p>
-            </li>
-            <li>
-              <strong>טיפול מלא בכל הצד הטכני</strong>
-              <p>
-                רכישת דומיין, אחסון האתר, הגדרות DNS, תעודת SSL, קידום בסיסי
-                במנועי חיפוש וחיבור תקין של
-                <a href="/google-business-profile/">פרסום העסק בגוגל</a>.
-              </p>
-            </li>
-            <li>
-              <strong>שני סבבי תיקונים</strong>
-              <p>כלולים במחיר, כדי שהתוצאה תהיה בדיוק כמו שדמיינתם.</p>
-            </li>
-            <li>
-              <strong>חודש ליווי אחרי העלייה לאוויר</strong>
-              <p>תיקוני תקלות ושאלות, עלינו.</p>
-            </li>
-            <li>
-              <strong>הדרכה ומסירה מסודרת</strong>
-              <p>האתר שלכם, כולל גישה מלאה לכל החשבונות.</p>
-            </li>
-          </ul>
-          <p class="not-included">
-            <strong>לא כלול (ניתן להוסיף):</strong>
-            כתיבת תוכן שיווקי וצילום
-            <span class="sep" aria-hidden="true">·</span>
-            עיצוב לוגו ומיתוג
-            <span class="sep" aria-hidden="true">·</span>
-            עלות שנתית של דומיין ואחסון (משולמת ישירות לספק, עשרות שקלים בשנה)
-            <span class="sep" aria-hidden="true">·</span>
-            אחזקה שוטפת - ראו ליווי חודשי
+            {allGuides.length} מדריכים בלי ז'רגון ובלי מכירות: מחירים, זמנים,
+            אבטחה, נגישות ואוטומציה.
           </p>
         </div>
-      </section>
-
-      <section
-        class="final-cta reveal"
-        id="contact"
-        aria-labelledby="contact-title"
-      >
-        <div class="container">
-          <div class="section-header">
-            <h2 class="section-title ruled" id="contact-title">רוצים שנבנה לכם אתר/אפליקציה?</h2>
-          </div>
-          <p>נשמח לשמוע על הפרויקט שלכם.</p>
-          <div class="cta-row">
-            <a class="btn btn-whatsapp wa-link" href="#">
-              <svg class="icon-wa" aria-hidden="true" focusable="false">
-                <use href="#icon-whatsapp" />
-              </svg>
-              דברו איתנו בוואטסאפ
-            </a>
-            <a class="btn btn-email email-link" href="#">
-              <svg class="icon-wa" aria-hidden="true" focusable="false">
-                <use href="#icon-mail" />
-              </svg>
-              שלחו לנו מייל
-            </a>
-          </div>
+        <div class="guide-search" data-guide-search>
+          <label for="guide-q">חיפוש במדריכים</label>
+          <input id="guide-q" type="search" placeholder="למשל: כמה עולה חנות אונליין" autocomplete="off" />
+          <p class="visually-hidden" aria-live="polite" data-count></p>
+          <ul class="guide-results" data-results hidden></ul>
+          <ul class="chip-row" data-popular aria-label="שאלות נפוצות">
+            {
+              popular.map((p) => (
+                <li>
+                  <a class="chip" href={p.href}>{p.label}</a>
+                </li>
+              ))
+            }
+          </ul>
+          <a class="more-link" href="/guides/">לכל המדריכים <span aria-hidden="true">&#8592;</span></a>
+          <script type="application/json" data-index set:html={searchIndex} />
+          <script>
+            import "../scripts/guide-search.js";
+          </script>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
+
+    <section class="final-cta" id="contact" aria-labelledby="contact-title">
+      <div class="container">
+        <h2 id="contact-title">שלוש שאלות, ואתם יודעים כמה זה עולה.</h2>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#quote">בונים הצעה <span aria-hidden="true">&#8592;</span></a>
+          <a class="btn btn-whatsapp wa-link" href="#">
+            <svg class="icon-wa" aria-hidden="true" focusable="false"><use href="#icon-whatsapp"></use></svg>
+            כתבו לנו בוואטסאפ
+          </a>
+          <a class="btn btn-ghost-light email-link" href="#">
+            <svg class="icon-wa" aria-hidden="true" focusable="false"><use href="#icon-mail"></use></svg>
+            שלחו מייל
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
 </Base>

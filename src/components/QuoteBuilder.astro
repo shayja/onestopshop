@@ -1,0 +1,79 @@
+---
+// Three-question quote builder. The first question is server-rendered;
+// quote.js takes over from there. Without JS a plain WhatsApp prompt shows.
+import { needs, details, timing, recommendations } from "../data/quote";
+
+const data = JSON.stringify({ needs, details, timing, recommendations });
+---
+
+<div class="quote" id="quote" data-quote>
+  <div class="quote-js">
+    <div class="quote-head">
+      <span class="quote-step" aria-live="polite">שלב 1 מתוך 3</span>
+      <span>30 שניות, בלי הרשמה</span>
+    </div>
+    <div class="quote-bar" aria-hidden="true"><span></span></div>
+
+    <form class="quote-form">
+      <fieldset>
+        <legend class="quote-title" tabindex="-1">{needs.title}</legend>
+        <p class="quote-hint">{needs.hint}</p>
+        <div class="quote-options">
+          {
+            needs.options.map((o) => (
+              <label class="quote-option">
+                <input type="radio" name="q0" value={o.id} />
+                <strong>{o.label}</strong>
+                {o.hint && <span>{o.hint}</span>}
+              </label>
+            ))
+          }
+        </div>
+      </fieldset>
+      <div class="quote-actions">
+        <button type="button" class="quote-back" hidden>חזרה</button>
+        <button type="submit" class="btn btn-primary quote-next" disabled>המשך</button>
+      </div>
+    </form>
+
+    <div class="quote-result" tabindex="-1" hidden>
+      <p class="quote-kicker">ההמלצה שלנו</p>
+      <div class="quote-card">
+        <p class="quote-name" data-r="name"></p>
+        <p class="quote-price">
+          <span data-r="from">החל מ-</span><strong data-r="price"></strong>
+          <span data-r="vat">+ מע״מ</span>
+        </p>
+        <p class="quote-time" data-r="time"></p>
+      </div>
+      <ul class="quote-includes" data-r="includes"></ul>
+      <p class="quote-msg-label">הכנו לכם הודעה:</p>
+      <p class="quote-msg" data-r="message"></p>
+      <a class="btn btn-whatsapp quote-wa" data-r="wa" href="#" target="_blank" rel="noopener">
+        <svg class="icon-wa" aria-hidden="true" focusable="false"><use href="#icon-whatsapp"></use></svg>
+        שלחו בוואטסאפ
+      </a>
+      <div class="quote-links">
+        <a data-r="href" href="/website-packages/">לפרטים המלאים <span aria-hidden="true">&#8592;</span></a>
+        <button type="button" class="quote-restart">להתחיל מחדש</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="quote-nojs">
+    <p class="quote-title">מה העסק צריך?</p>
+    <p class="quote-hint">
+      ספרו לנו בכמה מילים, ונחזור עם מחיר ולוח זמנים לפני שמתחילים.
+    </p>
+    <a class="btn btn-whatsapp wa-link" href="#">
+      <svg class="icon-wa" aria-hidden="true" focusable="false"><use href="#icon-whatsapp"></use></svg>
+      דברו איתנו בוואטסאפ
+    </a>
+  </div>
+
+  <script type="application/json" class="quote-data" set:html={data} />
+</div>
+
+<script>
+  import "../scripts/quote.js";
+</script>

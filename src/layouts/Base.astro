@@ -2,6 +2,7 @@
 import "../styles.css";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+import ActionBar from "../components/ActionBar.astro";
 import { enhanceArticle } from "../lib/article";
 
 interface Props {
@@ -13,7 +14,6 @@ interface Props {
   ogDescription: string; // also used for twitter:description
   ogImageAlt?: string;
   variant?: "home" | "article" | "packages"; // picks nav + footer flavor
-  waFloat?: boolean;
   datePublished?: string; // presence turns on the Article JSON-LD
   dateModified?: string;
 }
@@ -27,7 +27,6 @@ const {
   ogDescription,
   ogImageAlt = "One Stop Shop - בניית אתרים, אפליקציות ואוטומציה לעסקים",
   variant = "article",
-  waFloat = true,
   datePublished,
   dateModified,
 } = Astro.props;
@@ -104,7 +103,7 @@ const body = datePublished
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="theme-color" content="#faf9f7" />
+    <meta name="theme-color" content="#f3f5f8" />
 
     <slot name="head-late" />
 
@@ -122,6 +121,17 @@ const body = datePublished
       href="/fonts/heebo-var-latin.woff2"
       crossorigin
     />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/rubik-var-hebrew.woff2"
+      crossorigin
+    />
+
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
 
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
@@ -163,20 +173,15 @@ const body = datePublished
       </symbol>
     </svg>
     <Nav variant={variant} />
+    {datePublished && <div class="read-progress" aria-hidden="true"><span></span></div>}
 
     <Fragment set:html={body} />
 
     <Footer variant={variant} />
 
-    {
-      waFloat && (
-        <a class="wa-float wa-link" href="#" aria-label="שליחת הודעת וואטסאפ">
-          <svg class="icon-wa" aria-hidden="true" focusable="false">
-            <use href="#icon-whatsapp" />
-          </svg>
-        </a>
-      )
-    }
+    <ActionBar
+      variant={variant === "home" ? "home" : datePublished ? "article" : "default"}
+    />
 
     <script>
       import "../scripts/site.js";
